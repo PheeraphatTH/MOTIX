@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme/theme';
@@ -47,11 +47,11 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
+      <HashRouter>
         <CartProvider>
           <AppContent />
         </CartProvider>
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   );
 }
