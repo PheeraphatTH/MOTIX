@@ -1,0 +1,6 @@
+{
+  "name": "MOTIX — KEEP YOUR RIDE MOVING",
+  "description": "Modern Automotive & Motorcycle Spare Parts E-Commerce Platform for digital marketing showcase",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
