@@ -7,7 +7,6 @@
 ## 📌 วิธีที่ 1: อัปเดตอัตโนมัติด้วย GitHub Actions (แนะนำ)
 
 ไฟล์ `.github/workflows/deploy.yml` ได้ถูกสร้างไว้เรียบร้อยแล้ว ทุกครั้งที่คุณ Push โค้ดขึ้น GitHub ระบบจะ Build และ Deploy เว็บไซต์ให้อัตโนมัติ:
-
 1. **สร้าง Repository บน GitHub** (เช่น ชื่อ `motix-autoparts`)
 2. **Push โค้ดขึ้น GitHub**:
    ```bash
