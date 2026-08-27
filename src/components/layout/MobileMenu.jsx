@@ -18,6 +18,7 @@ import {
   SlidersHorizontal,
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { MotixBrandLogo } from '../common/MotixBrandLogo';
 
 export const MobileMenu = ({ isOpen, onClose }) => {
   const { t, i18n } = useTranslation();
@@ -53,14 +54,9 @@ export const MobileMenu = ({ isOpen, onClose }) => {
       <div className="relative w-4/5 max-w-xs bg-[#0F121A] border-r border-[#262D3D] h-full flex flex-col z-10 shadow-2xl overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[#1F2636]">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#E63946] flex items-center justify-center text-white">
-              <Zap className="w-4 h-4" />
-            </div>
-            <span className="font-heading text-xl font-black text-white">
-              MOT<span className="text-[#E63946]">IX</span>
-            </span>
-          </div>
+          <Link to="/" onClick={onClose}>
+            <MotixBrandLogo size="sm" showTagline={true} />
+          </Link>
           <button
             onClick={onClose}
             className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"

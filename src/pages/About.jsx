@@ -12,32 +12,15 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
+import { BrandIdentityBanner } from '../components/common/BrandIdentityBanner';
 
 export const About = () => {
   return (
     <div className="min-h-screen bg-[#0B0D12] py-10 sm:py-16 text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
-        {/* 1. Hero Brand Intro */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-xs font-bold text-[#FF6B6B]">
-            <Zap className="w-4 h-4 text-[#E63946]" />
-            <span>ABOUT MOTIX BRAND</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-black text-white font-heading">
-            KEEP YOUR <span className="text-[#E63946]">RIDE MOVING</span>
-          </h1>
-
-          <p className="text-lg sm:text-xl font-bold text-slate-200">
-            "ให้รถของคุณพร้อมเดินทางต่อ"
-          </p>
-
-          <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl mx-auto">
-            MOTIX คือแบรนด์ศูนย์รวมอะไหล่รถยนต์และรถจักรยานยนต์ออนไลน์ยุคใหม่ 
-            ที่มุ่งเน้นการแก้ปัญหาความยุ่งยากในการค้นหาอะไหล่ ให้ผู้ขับขี่ทุกคนมั่นใจได้ว่ารถของตนจะได้รับชิ้นส่วนที่ถูกต้อง ตรงรุ่น และมีคุณภาพสูงสุด
-          </p>
-        </div>
+        {/* 1. Official Brand Identity Banner */}
+        <BrandIdentityBanner />
 
         {/* 2. Brand Story & Academic Mini Project Context (Section 23 & 37) */}
         <div className="rounded-3xl bg-[#121622] border border-[#262F42] p-8 sm:p-12 shadow-2xl space-y-6">

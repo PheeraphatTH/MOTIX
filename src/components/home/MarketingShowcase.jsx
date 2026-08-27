@@ -11,6 +11,7 @@ import {
   HeartHandshake,
 } from 'lucide-react';
 import { Button } from '../common/Button';
+import { BrandIdentityBanner } from '../common/BrandIdentityBanner';
 
 export const MarketingShowcase = () => {
   const navigate = useNavigate();
@@ -58,8 +59,11 @@ export const MarketingShowcase = () => {
       {/* Glow Effects */}
       <div className="absolute top-1/2 left-0 w-72 h-72 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
         
+        {/* Brand Official Identity Banner Showcase */}
+        <BrandIdentityBanner />
+
         {/* Brand Core Emotional Banner (Section 12 & 37) */}
         <div className="mb-16 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#1A1F2C] via-[#121622] to-[#0D1017] border border-[#2D384E] shadow-2xl relative overflow-hidden">
           <div className="max-w-3xl space-y-4">

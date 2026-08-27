@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { MotixBrandLogo } from '../common/MotixBrandLogo';
 import {
   Zap,
   Phone,
@@ -73,13 +74,8 @@ export const Footer = () => {
           
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#E63946] to-[#9A031E] flex items-center justify-center text-white">
-                <Zap className="w-5 h-5" />
-              </div>
-              <span className="font-heading text-2xl font-black text-white">
-                MOT<span className="text-[#E63946]">IX</span>
-              </span>
+            <Link to="/" className="inline-block" aria-label="MOTIX Home">
+              <MotixBrandLogo size="lg" showTagline={true} />
             </Link>
             
             <p className="text-xs font-bold tracking-widest text-[#FF6B6B] uppercase">

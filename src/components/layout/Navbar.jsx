@@ -15,6 +15,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { MotixBrandLogo } from '../common/MotixBrandLogo';
 
 export const Navbar = ({ onOpenMobileMenu }) => {
   const { t, i18n } = useTranslation();
@@ -79,20 +80,8 @@ export const Navbar = ({ onOpenMobileMenu }) => {
             </button>
 
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group shrink-0">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#E63946] via-[#D62839] to-[#9A031E] flex items-center justify-center shadow-lg shadow-red-900/40 text-white font-extrabold text-xl tracking-tighter transform group-hover:scale-105 transition-transform duration-200 border border-red-400/30">
-                <Zap className="w-5 h-5 fill-white text-white" />
-              </div>
-              <div className="flex flex-col">
-                <div className="flex items-center">
-                  <span className="font-heading text-2xl sm:text-3xl font-black tracking-wider text-white">
-                    MOT<span className="text-[#E63946]">IX</span>
-                  </span>
-                </div>
-                <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 tracking-widest uppercase -mt-1 hidden sm:block">
-                  KEEP YOUR RIDE MOVING
-                </span>
-              </div>
+            <Link to="/" className="flex items-center group shrink-0" aria-label="MOTIX Home">
+              <MotixBrandLogo size="md" showTagline={true} />
             </Link>
           </div>
 
