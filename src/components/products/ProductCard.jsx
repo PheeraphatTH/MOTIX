@@ -17,9 +17,11 @@ export const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const { addToCart, toggleWishlist, isInWishlist, setQuickViewProduct, selectedVehicle } = useCart();
 
-  const isFavorite = isInWishlist(product.id);
-  const isCompatibleWithSelected = selectedVehicle.model
-    ? product.compatibleVehicles?.some(v => v.toLowerCase().includes(selectedVehicle.model.toLowerCase()))
+  const isFavorite = isInWishlist(product?.id);
+  const isCompatibleWithSelected = selectedVehicle && selectedVehicle.model
+    ? (product?.compatibleVehicles || []).some(v =>
+        typeof v === 'string' && v.toLowerCase().includes(String(selectedVehicle.model).toLowerCase())
+      )
     : true;
 
   const formatPrice = (price) => {

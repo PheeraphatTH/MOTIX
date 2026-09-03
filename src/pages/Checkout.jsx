@@ -427,22 +427,40 @@ export const Checkout = () => {
 
               {/* Items List */}
               <div className="space-y-3 max-h-56 overflow-y-auto pr-1">
-                {cart.map((item) => (
-                  <div key={item.id} className="flex items-center gap-3 text-xs">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-10 h-10 rounded-lg bg-[#0E1119] border border-[#202738] object-contain p-1 shrink-0"
-                    />
-                    <div className="flex-1 truncate">
-                      <span className="text-white font-medium block truncate">{item.name}</span>
-                      <span className="text-slate-400 text-[11px] font-mono">จำนวน: {item.quantity} x ฿{formatPrice(item.price)}</span>
+                {cart.map((rawItem, idx) => {
+                  const item = rawItem.product || rawItem;
+                  const price = Number(rawItem.price ?? item.price ?? 0);
+                  const safePrice = isNaN(price) ? 0 : price;
+                  const quantity = Math.max(1, Number(rawItem.quantity) || 1);
+                  const name = rawItem.name || item.name || 'อะไหล่ MOTIX';
+                  const image = rawItem.image || item.image || 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=300&auto=format&fit=crop&q=80';
+                  const itemId = rawItem.id || item.id || `co-item-${idx}`;
+
+                  return (
+                    <div key={itemId} className="flex items-center gap-3 text-xs">
+                      <div className="w-10 h-10 rounded-lg bg-white border border-[#202738] p-0.5 shrink-0 flex items-center justify-center overflow-hidden">
+                        <img
+                          src={image}
+                          alt={name}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            e.currentTarget.src = 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=300&auto=format&fit=crop&q=80';
+                          }}
+                        />
+                      </div>
+                      <div className="flex-1 truncate">
+                        <span className="text-white font-medium block truncate">{name}</span>
+                        <span className="text-slate-400 text-[11px] font-mono">
+                          จำนวน: {quantity} x ฿{formatPrice(safePrice)}
+                        </span>
+                      </div>
+                      <span className="text-white font-bold font-mono">
+                        ฿{formatPrice(safePrice * quantity)}
+                      </span>
                     </div>
-                    <span className="text-white font-bold font-mono">
-                      ฿{formatPrice(item.price * item.quantity)}
-                    </span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Calculations */}

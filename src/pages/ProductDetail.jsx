@@ -73,13 +73,21 @@ export const ProductDetail = () => {
   };
 
   const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+    try {
+      if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(window.location.href);
+      }
+    } catch {
+      // Ignore iframe clipboard permission restrictions
+    }
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2500);
   };
 
-  const isCompatibleWithSelected = selectedVehicle.model
-    ? product.compatibleVehicles?.some(v => v.toLowerCase().includes(selectedVehicle.model.toLowerCase()))
+  const isCompatibleWithSelected = selectedVehicle && selectedVehicle.model
+    ? (product?.compatibleVehicles || []).some(v => 
+        typeof v === 'string' && v.toLowerCase().includes(String(selectedVehicle.model).toLowerCase())
+      )
     : null;
 
   return (

@@ -172,8 +172,12 @@ export const MobileMenu = ({ isOpen, onClose }) => {
           {user ? (
             <div className="pt-2">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-white truncate">{user.name}</span>
-                <span className="text-[10px] text-amber-400 font-semibold">{user.points} แต้ม</span>
+                <span className="text-xs font-bold text-white truncate">
+                  {typeof user?.name === 'string' ? user.name : (typeof user?.name === 'object' && user?.name?.name ? String(user.name.name) : 'สมาชิก MOTIX')}
+                </span>
+                <span className="text-[10px] text-amber-400 font-semibold">
+                  {typeof user?.points === 'number' || typeof user?.points === 'string' ? user.points : 0} แต้ม
+                </span>
               </div>
               <button
                 onClick={() => {
@@ -186,13 +190,21 @@ export const MobileMenu = ({ isOpen, onClose }) => {
               </button>
             </div>
           ) : (
-            <button
-              onClick={() => handleLinkClick('/login')}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white text-xs font-bold flex items-center justify-center gap-2"
-            >
-              <User className="w-4 h-4" />
-              <span>เข้าสู่ระบบ / สมัครสมาชิก</span>
-            </button>
+            <div className="space-y-2">
+              <button
+                onClick={() => handleLinkClick('/register')}
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer"
+              >
+                <User className="w-4 h-4" />
+                <span>สมัครสมาชิกใหม่ (รับ 100 แต้ม)</span>
+              </button>
+              <button
+                onClick={() => handleLinkClick('/login')}
+                className="w-full py-2 rounded-xl bg-[#181E2C] hover:bg-[#222A3D] text-slate-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-2 border border-[#2B354A] cursor-pointer"
+              >
+                <span>เข้าสู่ระบบ</span>
+              </button>
+            </div>
           )}
         </div>
       </div>

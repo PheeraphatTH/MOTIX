@@ -2,9 +2,11 @@ import React from 'react';
 import { Star, StarHalf } from 'lucide-react';
 
 export const RatingStars = ({ rating = 5, reviewCount, size = 'sm', showNumber = true }) => {
+  const num = Number(rating);
+  const safeRating = isNaN(num) ? 5 : Math.min(5, Math.max(0, num));
   const starSize = size === 'xs' ? 'w-3 h-3' : size === 'sm' ? 'w-3.5 h-3.5' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4';
-  const fullStars = Math.floor(rating);
-  const hasHalf = rating % 1 >= 0.4;
+  const fullStars = Math.min(5, Math.max(0, Math.floor(safeRating)));
+  const hasHalf = safeRating % 1 >= 0.4;
   const emptyStars = Math.max(0, 5 - fullStars - (hasHalf ? 1 : 0));
 
   return (
@@ -23,7 +25,7 @@ export const RatingStars = ({ rating = 5, reviewCount, size = 'sm', showNumber =
 
       {showNumber && (
         <span className={`font-semibold text-slate-300 ${size === 'xs' ? 'text-[11px]' : size === 'sm' ? 'text-xs' : 'text-sm'}`}>
-          {Number(rating).toFixed(1)}
+          {safeRating.toFixed(1)}
         </span>
       )}
 

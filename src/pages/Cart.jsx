@@ -36,7 +36,8 @@ export const Cart = () => {
   const [couponError, setCouponError] = useState('');
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('th-TH').format(price);
+    const num = Number(price);
+    return new Intl.NumberFormat('th-TH').format(isNaN(num) ? 0 : num);
   };
 
   const handleApplyCoupon = (e) => {
@@ -85,7 +86,7 @@ export const Cart = () => {
           <button
             type="button"
             onClick={clearCart}
-            className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1.5 transition-colors"
+            className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <Trash2 className="w-4 h-4" />
             <span>ล้างตะกร้าทั้งหมด</span>
@@ -96,88 +97,108 @@ export const Cart = () => {
           
           {/* Left Column: Cart Items List */}
           <div className="lg:col-span-8 space-y-4">
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                className="rounded-2xl bg-[#121622] border border-[#222A3B] p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 shadow-md"
-              >
-                {/* Image Container */}
-                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-[#0E1119] border border-[#202738] p-2 flex items-center justify-center shrink-0">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
+            {cart.map((rawItem, index) => {
+              const item = rawItem.product || rawItem;
+              const price = Number(rawItem.price ?? item.price ?? 0);
+              const safePrice = isNaN(price) ? 0 : price;
+              const quantity = Math.max(1, Number(rawItem.quantity) || 1);
+              const name = rawItem.name || item.name || 'อะไหล่ MOTIX';
+              const brand = rawItem.brand || item.brand || 'MOTIX';
+              const sku = rawItem.sku || item.sku || 'MTX-PART';
+              const image = rawItem.image || item.image || 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=300&auto=format&fit=crop&q=80';
+              const itemId = rawItem.id || item.id || `item-${index}`;
+              const compatibleList = rawItem.compatibleVehicles || item.compatibleVehicles || [];
+              const fitmentText = rawItem.vehicle || (compatibleList.length > 0 ? compatibleList.slice(0, 3).join(', ') : 'รองรับหลากหลายรุ่น');
 
-                {/* Details */}
-                <div className="flex-1 text-center sm:text-left space-y-1">
-                  <div className="flex items-center justify-center sm:justify-start gap-2">
-                    <span className="text-xs font-bold text-[#FF6B6B] uppercase">
-                      {item.brand}
-                    </span>
-                    <span className="text-slate-500">•</span>
-                    <span className="text-[11px] text-slate-400 font-mono">SKU: {item.sku}</span>
+              return (
+                <div
+                  key={itemId}
+                  className="rounded-2xl bg-[#121622] border border-[#222A3B] p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 shadow-md hover:border-[#E63946]/30 transition-colors"
+                >
+                  {/* Image Container */}
+                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-white border border-[#202738] p-2 flex items-center justify-center shrink-0 overflow-hidden">
+                    <img
+                      src={image}
+                      alt={name}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=300&auto=format&fit=crop&q=80';
+                      }}
+                    />
                   </div>
 
-                  <Link
-                    to={`/products/${item.id}`}
-                    className="text-sm sm:text-base font-bold text-white hover:text-[#FF6B6B] transition-colors block line-clamp-1"
-                  >
-                    {item.name}
-                  </Link>
+                  {/* Details */}
+                  <div className="flex-1 text-center sm:text-left space-y-1 w-full sm:w-auto">
+                    <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+                      <span className="text-xs font-bold text-[#FF6B6B] uppercase">
+                        {brand}
+                      </span>
+                      <span className="text-slate-500">•</span>
+                      <span className="text-[11px] text-slate-400 font-mono">SKU: {sku}</span>
+                    </div>
 
-                  <p className="text-xs text-slate-400 line-clamp-1">
-                    รองรับ: {item.compatibleVehicles?.slice(0, 3).join(', ')}
-                  </p>
+                    <Link
+                      to={`/products/${itemId}`}
+                      className="text-sm sm:text-base font-bold text-white hover:text-[#FF6B6B] transition-colors block line-clamp-1"
+                    >
+                      {name}
+                    </Link>
 
-                  <div className="text-sm font-mono text-slate-300 sm:hidden pt-1">
-                    ฿{formatPrice(item.price)} ต่อชิ้น
+                    <p className="text-xs text-slate-400 line-clamp-1">
+                      รองรับ: {fitmentText}
+                    </p>
+
+                    <div className="text-sm font-mono text-slate-300 sm:hidden pt-1">
+                      ฿{formatPrice(safePrice)} ต่อชิ้น
+                    </div>
                   </div>
-                </div>
 
-                {/* Quantity & Price Controls */}
-                <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-4 sm:gap-2">
-                  <div className="flex items-center rounded-xl bg-[#161B27] border border-[#2B354A]">
+                  {/* Quantity & Price Controls */}
+                  <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-4 sm:gap-2">
+                    <div className="flex items-center rounded-xl bg-[#161B27] border border-[#2B354A]">
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(itemId, quantity - 1)}
+                        className="px-2.5 py-1 text-slate-300 hover:text-white font-bold cursor-pointer transition-colors"
+                        title="ลดจำนวน"
+                      >
+                        -
+                      </button>
+                      <span className="px-3 py-1 text-xs font-mono font-bold text-white min-w-[28px] text-center">
+                        {quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(itemId, quantity + 1)}
+                        className="px-2.5 py-1 text-slate-300 hover:text-white font-bold cursor-pointer transition-colors"
+                        title="เพิ่มจำนวน"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <div className="text-right">
+                      <span className="text-base sm:text-lg font-black text-white font-mono block">
+                        ฿{formatPrice(safePrice * quantity)}
+                      </span>
+                      <span className="hidden sm:block text-[10px] text-slate-400 font-mono">
+                        (฿{formatPrice(safePrice)} / ชิ้น)
+                      </span>
+                    </div>
+
                     <button
                       type="button"
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="px-2.5 py-1 text-slate-300 hover:text-white font-bold"
+                      onClick={() => removeFromCart(itemId)}
+                      className="p-1.5 rounded-lg text-slate-500 hover:text-red-400 transition-colors cursor-pointer"
+                      title="ลบรายการนี้"
                     >
-                      -
-                    </button>
-                    <span className="px-3 py-1 text-xs font-mono font-bold text-white">
-                      {item.quantity}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="px-2.5 py-1 text-slate-300 hover:text-white font-bold"
-                    >
-                      +
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
-
-                  <div className="text-right">
-                    <span className="text-base sm:text-lg font-black text-white font-mono block">
-                      ฿{formatPrice(item.price * item.quantity)}
-                    </span>
-                    <span className="hidden sm:block text-[10px] text-slate-400 font-mono">
-                      (฿{formatPrice(item.price)} / ชิ้น)
-                    </span>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => removeFromCart(item.id)}
-                    className="p-1.5 rounded-lg text-slate-500 hover:text-red-400 transition-colors"
-                    title="ลบรายการนี้"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {/* Guarantees row */}
             <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-[#121622]/60 border border-[#1E2536] text-xs text-slate-400 text-center">

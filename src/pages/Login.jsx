@@ -1,67 +1,129 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Zap, Mail, Lock, LogIn, ArrowRight, UserCheck } from 'lucide-react';
+import {
+  Zap,
+  Mail,
+  Lock,
+  LogIn,
+  ArrowRight,
+  UserCheck,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  Car,
+  Bike,
+} from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/common/Button';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { loginUser } = useCart();
-  const [email, setEmail] = useState('somchai.m@example.com');
+  const { loginUser, registeredUsers } = useCart();
+  const [email, setEmail] = useState('somchai@motix.com');
   const [password, setPassword] = useState('password123');
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginUser({
-      name: 'สมชาย มั่นคง',
-      email: email || 'somchai.m@example.com',
-      phone: '081-234-5678',
-      points: 250,
-    });
-    navigate('/');
+    setErrorMessage('');
+
+    if (!email.trim()) {
+      setErrorMessage('กรุณากรอกอีเมล');
+      return;
+    }
+
+    if (!password) {
+      setErrorMessage('กรุณากรอกรหัสผ่าน');
+      return;
+    }
+
+    setIsLoading(true);
+
+    setTimeout(() => {
+      const res = loginUser({ email, password });
+      setIsLoading(false);
+
+      if (res && res.success) {
+        navigate('/');
+      } else {
+        setErrorMessage(res?.message || 'อีเมลหรือรหัสผ่านไม่ถูกต้อง');
+      }
+    }, 400);
   };
 
-  const handleQuickDemoLogin = () => {
-    loginUser({
-      name: 'สมชาย มั่นคง (Demo User)',
-      email: 'demo.motix@example.com',
-      phone: '089-999-8888',
-      points: 500,
-    });
-    navigate('/');
+  const handleQuickDemoLogin = (targetEmail, targetPassword) => {
+    setEmail(targetEmail);
+    setPassword(targetPassword);
+    setErrorMessage('');
+    const res = loginUser({ email: targetEmail, password: targetPassword });
+    if (res && res.success) {
+      navigate('/');
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#0B0D12] py-12 sm:py-20 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-[#121622] border border-[#262F42] rounded-3xl p-8 shadow-2xl space-y-6">
+      <div className="w-full max-w-md bg-[#121622] border border-[#262F42] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         
         {/* Logo & Title */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-[#E63946] to-[#9A031E] text-white shadow-lg mb-2">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-[#E63946] to-[#9A031E] text-white shadow-lg mb-1">
             <Zap className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-black text-white font-heading">
-            เข้าสู่ระบบ MOTIX
+            เข้าสู่ระบบ MOTIX Club
           </h1>
           <p className="text-xs text-slate-400">
             ยินดีต้อนรับกลับสู่ศูนย์รวมอะไหล่ยานยนต์คุณภาพ
           </p>
         </div>
 
-        {/* Demo Quick Button */}
-        <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center space-y-2">
-          <div className="flex items-center justify-center gap-1.5 text-xs text-amber-300 font-bold">
-            <UserCheck className="w-4 h-4" />
-            <span>สำหรับนำเสนอ Mini Project</span>
+        {/* Demo Quick Button for mini project showcase */}
+        <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2.5">
+          <div className="flex items-center justify-between text-xs text-amber-300 font-bold">
+            <span className="flex items-center gap-1.5">
+              <UserCheck className="w-4 h-4 text-amber-400" />
+              <span>บัญชีทดสอบระบบ (Demo Accounts)</span>
+            </span>
+            <span className="text-[10px] text-amber-400/80">กดเพื่อล็อกอินทันที</span>
           </div>
-          <button
-            type="button"
-            onClick={handleQuickDemoLogin}
-            className="w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition-all shadow-md cursor-pointer"
-          >
-            กดเพื่อเข้าสู่ระบบทันที (1-Click Demo Login)
-          </button>
+
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => handleQuickDemoLogin('somchai@motix.com', 'password123')}
+              className="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-left transition-all cursor-pointer group"
+            >
+              <div className="flex items-center gap-1 text-[11px] font-bold text-white group-hover:text-amber-300">
+                <Car className="w-3.5 h-3.5 text-red-400 shrink-0" />
+                <span className="truncate">สมชาย มั่นคง</span>
+              </div>
+              <span className="text-[9px] text-slate-400 block truncate">Toyota (Gold - 350 แต้ม)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleQuickDemoLogin('anan.biker@motix.com', 'password123')}
+              className="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-left transition-all cursor-pointer group"
+            >
+              <div className="flex items-center gap-1 text-[11px] font-bold text-white group-hover:text-amber-300">
+                <Bike className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                <span className="truncate">อนันต์ สายซิ่ง</span>
+              </div>
+              <span className="text-[9px] text-slate-400 block truncate">Honda CBR (820 แต้ม)</span>
+            </button>
+          </div>
         </div>
+
+        {/* Error Alert */}
+        {errorMessage && (
+          <div className="p-3.5 rounded-2xl bg-red-950/50 border border-red-500/60 text-xs text-red-300 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+            <span>{errorMessage}</span>
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
@@ -74,7 +136,7 @@ export const Login = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#0E1119] border border-[#262F42] rounded-xl pl-10 pr-3.5 py-2.5 text-white focus:outline-none focus:border-[#E63946]"
+                className="w-full bg-[#0E1119] border border-[#262F42] rounded-xl pl-10 pr-3.5 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-[#E63946] transition-colors"
                 placeholder="you@example.com"
               />
             </div>
@@ -85,34 +147,46 @@ export const Login = () => {
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[#0E1119] border border-[#262F42] rounded-xl pl-10 pr-3.5 py-2.5 text-white focus:outline-none focus:border-[#E63946]"
+                className="w-full bg-[#0E1119] border border-[#262F42] rounded-xl pl-10 pr-10 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-[#E63946] transition-colors"
                 placeholder="••••••••"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-2.5 text-slate-500 hover:text-slate-300 cursor-pointer"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
             </div>
           </div>
 
           <div className="flex items-center justify-between text-[11px]">
             <label className="flex items-center gap-1.5 text-slate-400 cursor-pointer">
-              <input type="checkbox" defaultChecked className="rounded bg-[#0E1119] border-slate-700 text-[#E63946]" />
+              <input type="checkbox" defaultChecked className="rounded bg-[#0E1119] border-slate-700 text-[#E63946] cursor-pointer" />
               <span>จดจำการเข้าสู่ระบบ</span>
             </label>
-            <a href="#forgot" onClick={(e) => e.preventDefault()} className="text-[#FF6B6B] hover:underline">
+            <button
+              type="button"
+              onClick={() => setErrorMessage('💡 เพื่อความสะดวกในการทดสอบ สามารถกดปุ่มบัญชีทดสอบ Demo ด้านบน หรือสมัครสมาชิกใหม่ได้ทันที')}
+              className="text-[#FF6B6B] hover:underline cursor-pointer"
+            >
               ลืมรหัสผ่าน?
-            </a>
+            </button>
           </div>
 
           <Button
             type="submit"
             variant="primary"
             size="lg"
+            disabled={isLoading}
             icon={LogIn}
-            className="w-full shadow-lg shadow-red-950/50"
+            className="w-full shadow-lg shadow-red-950/50 cursor-pointer"
           >
-            เข้าสู่ระบบ
+            {isLoading ? 'กำลังตรวจสอบ...' : 'เข้าสู่ระบบ'}
           </Button>
         </form>
 
@@ -128,3 +202,4 @@ export const Login = () => {
     </div>
   );
 };
+
