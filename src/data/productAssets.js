@@ -121,6 +121,59 @@ export const BRAND_LOGOS = {
       <text x="70" y="27" font-family="'Arial Black', sans-serif" font-size="20" font-weight="900" fill="#FFFFFF" text-anchor="middle">OSRAM</text>
     </svg>
   `),
+
+  Akrapovic: toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" width="160" height="40">
+      <rect width="160" height="40" rx="4" fill="#18181B"/>
+      <!-- Akrapovic Red Scorpion Graphic / stylized curve -->
+      <path d="M12 12 Q20 28 28 14 Q32 20 24 28 Z" fill="#E60000"/>
+      <circle cx="28" cy="14" r="3" fill="#E60000"/>
+      <text x="38" y="26" font-family="'Arial Black', Impact, sans-serif" font-size="16" font-weight="900" font-style="italic" fill="#FFFFFF" letter-spacing="0.5">AKRAPOVIČ</text>
+    </svg>
+  `),
+
+  'K&N': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40" width="140" height="40">
+      <rect width="140" height="40" rx="4" fill="#E31B23"/>
+      <text x="70" y="28" font-family="'Arial Black', sans-serif" font-size="22" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle">K&amp;N</text>
+    </svg>
+  `),
+
+  KN: toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40" width="140" height="40">
+      <rect width="140" height="40" rx="4" fill="#E31B23"/>
+      <text x="70" y="28" font-family="'Arial Black', sans-serif" font-size="22" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle">K&amp;N</text>
+    </svg>
+  `),
+
+  Enkei: toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40" width="140" height="40">
+      <rect width="140" height="40" rx="4" fill="#003580"/>
+      <text x="70" y="28" font-family="'Arial Black', sans-serif" font-size="22" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle">ENKEI</text>
+    </svg>
+  `),
+
+  Castrol: toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 40" width="150" height="40">
+      <rect width="150" height="40" rx="4" fill="#007A33"/>
+      <text x="75" y="27" font-family="'Arial Black', Impact, sans-serif" font-size="20" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle">Castrol</text>
+      <circle cx="132" cy="20" r="4" fill="#E31B23"/>
+    </svg>
+  `),
+
+  Ohlins: toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 40" width="150" height="40">
+      <rect width="150" height="40" rx="4" fill="#00529B"/>
+      <text x="75" y="28" font-family="'Arial Black', sans-serif" font-size="22" font-weight="900" font-style="italic" fill="#FFCC00" text-anchor="middle">ÖHLINS</text>
+    </svg>
+  `),
+
+  'Öhlins': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 40" width="150" height="40">
+      <rect width="150" height="40" rx="4" fill="#00529B"/>
+      <text x="75" y="28" font-family="'Arial Black', sans-serif" font-size="22" font-weight="900" font-style="italic" fill="#FFCC00" text-anchor="middle">ÖHLINS</text>
+    </svg>
+  `),
 };
 
 // ==========================================
@@ -945,6 +998,478 @@ export const PRODUCT_ASSETS = {
         <g transform="translate(0, 40)">
           <rect x="-24" y="-8" width="48" height="16" rx="3" fill="#FF6600"/>
           <text x="0" y="4" font-family="'Arial Black', sans-serif" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle">OSRAM</text>
+        </g>
+      </g>
+    </svg>
+  `),
+
+  // 13. Akrapovic Titanium Slip-On Motorcycle Exhaust
+  'akrapovic-exhaust': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="tiGrad" x1="0%" y1="0%" x2="100%" y2="50%">
+          <stop offset="0%" stop-color="#475569"/>
+          <stop offset="25%" stop-color="#94a3b8"/>
+          <stop offset="50%" stop-color="#cbd5e1"/>
+          <stop offset="70%" stop-color="#64748b"/>
+          <stop offset="100%" stop-color="#334155"/>
+        </linearGradient>
+        <linearGradient id="heatBluing" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
+          <stop offset="40%" stop-color="#a855f7" stop-opacity="0.85"/>
+          <stop offset="80%" stop-color="#3b82f6" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#0284c7" stop-opacity="0.9"/>
+        </linearGradient>
+        <linearGradient id="carbonEndCap" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#27272a"/>
+          <stop offset="50%" stop-color="#09090b"/>
+          <stop offset="100%" stop-color="#18181b"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="500" rx="200" ry="24" fill="#000000" opacity="0.18" filter="blur(16px)"/>
+
+      <g transform="translate(140, 200) rotate(-18)">
+        <!-- Link pipe with heat bluing gradient -->
+        <path d="M-50 180 C -20 180, 20 150, 40 100 L 75 100 C 55 160, 0 200, -50 200 Z" fill="url(#heatBluing)" stroke="#334155" stroke-width="2"/>
+        <line x1="-20" y1="183" x2="-10" y2="197" stroke="#fbbf24" stroke-width="3"/>
+        <line x1="5" y1="165" x2="18" y2="180" stroke="#c084fc" stroke-width="3"/>
+        <line x1="30" y1="135" x2="45" y2="148" stroke="#38bdf8" stroke-width="3"/>
+
+        <!-- Main Titanium Hexagonal Canister Body -->
+        <path d="M40 70 L 280 40 L 300 130 L 70 150 Z" fill="url(#tiGrad)" stroke="#1e293b" stroke-width="3"/>
+        
+        <!-- Carbon Fiber End Cap -->
+        <path d="M280 40 L 330 30 C 350 30, 365 70, 360 110 C 355 135, 335 145, 300 130 Z" fill="url(#carbonEndCap)" stroke="#09090b" stroke-width="3"/>
+        
+        <!-- Twin Exhaust Outlets -->
+        <ellipse cx="335" cy="70" rx="14" ry="18" fill="#09090b" stroke="#3f3f46" stroke-width="2.5"/>
+        <ellipse cx="335" cy="102" rx="12" ry="15" fill="#09090b" stroke="#3f3f46" stroke-width="2.5"/>
+        
+        <!-- Carbon Strap / Bracket Clamp -->
+        <rect x="190" y="35" width="26" height="118" rx="4" fill="#18181b" stroke="#71717a" stroke-width="1.5"/>
+        <circle cx="203" cy="28" r="8" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+        <circle cx="203" cy="28" r="3" fill="#0f172a"/>
+
+        <!-- Akrapovic Logo Plate -->
+        <g transform="translate(100, 75) rotate(-5)">
+          <rect x="-10" y="-8" width="85" height="34" rx="4" fill="#09090b" stroke="#27272a" stroke-width="1.5"/>
+          <path d="M-2 10 Q3 20 8 10 Q12 15 6 22 Z" fill="#E60000"/>
+          <circle cx="8" cy="10" r="2.5" fill="#E60000"/>
+          <text x="14" y="14" font-family="'Arial Black', sans-serif" font-size="9" font-weight="900" font-style="italic" fill="#FFFFFF">AKRAPOVIČ</text>
+        </g>
+      </g>
+    </svg>
+  `),
+
+  // 14. K&N High-Flow Performance Cone / Drop-in Air Filter
+  'kn-airfilter': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <radialGradient id="knRedCotton" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ef4444"/>
+          <stop offset="60%" stop-color="#b91c1c"/>
+          <stop offset="100%" stop-color="#7f1d1d"/>
+        </radialGradient>
+        <linearGradient id="knRubber" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#27272a"/>
+          <stop offset="50%" stop-color="#09090b"/>
+          <stop offset="100%" stop-color="#18181b"/>
+        </linearGradient>
+        <linearGradient id="chromeCap" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#94a3b8"/>
+          <stop offset="30%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#cbd5e1"/>
+          <stop offset="100%" stop-color="#475569"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="510" rx="190" ry="24" fill="#000000" opacity="0.18" filter="blur(16px)"/>
+
+      <g transform="translate(300, 300)">
+        <!-- Bottom Flange Rubber Mount & Hose Clamp -->
+        <rect x="-80" y="140" width="160" height="50" rx="10" fill="url(#knRubber)" stroke="#09090b" stroke-width="3"/>
+        <rect x="-85" y="150" width="170" height="18" rx="3" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+        <circle cx="60" cy="159" r="6" fill="#334155"/>
+        <line x1="56" y1="159" x2="64" y2="159" stroke="#ffffff" stroke-width="2"/>
+
+        <!-- Tapered Cone Filter Body (K&N Signature Oiled Red Pleated Cotton) -->
+        <path d="M-130 140 L -90 -110 L 90 -110 L 130 140 Z" fill="url(#knRedCotton)" stroke="#7f1d1d" stroke-width="3"/>
+        
+        <!-- Pleated Wire Mesh Vertical Lines -->
+        <g stroke="#3f3f46" stroke-width="3" opacity="0.85">
+          <line x1="-120" y1="140" x2="-84" y2="-110"/>
+          <line x1="-95" y1="140" x2="-66" y2="-110"/>
+          <line x1="-70" y1="140" x2="-48" y2="-110"/>
+          <line x1="-45" y1="140" x2="-30" y2="-110"/>
+          <line x1="-20" y1="140" x2="-12" y2="-110"/>
+          <line x1="0" y1="140" x2="0" y2="-110"/>
+          <line x1="20" y1="140" x2="12" y2="-110"/>
+          <line x1="45" y1="140" x2="30" y2="-110"/>
+          <line x1="70" y1="140" x2="48" y2="-110"/>
+          <line x1="95" y1="140" x2="66" y2="-110"/>
+          <line x1="120" y1="140" x2="84" y2="-110"/>
+        </g>
+
+        <!-- Top Chrome Cap / Embossed K&N Plate -->
+        <ellipse cx="0" cy="-110" rx="90" ry="24" fill="url(#chromeCap)" stroke="#334155" stroke-width="3"/>
+        <rect x="-42" y="-120" width="84" height="22" rx="4" fill="#dc2626"/>
+        <text x="0" y="-105" font-family="'Arial Black', sans-serif" font-size="14" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle">K&amp;N</text>
+      </g>
+    </svg>
+  `),
+
+  // 15. Enkei RPF1 Lightweight Racing Alloy Wheel
+  'enkei-wheel': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <radialGradient id="silverRim" cx="45%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="30%" stop-color="#e2e8f0"/>
+          <stop offset="70%" stop-color="#94a3b8"/>
+          <stop offset="100%" stop-color="#334155"/>
+        </radialGradient>
+        <radialGradient id="hubCenter" cx="45%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="#475569"/>
+          <stop offset="100%" stop-color="#09090b"/>
+        </radialGradient>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="520" rx="200" ry="24" fill="#000000" opacity="0.18" filter="blur(16px)"/>
+
+      <g transform="translate(300, 300)">
+        <!-- Outer Lip / Barrel -->
+        <circle cx="0" cy="0" r="215" fill="url(#silverRim)" stroke="#475569" stroke-width="4"/>
+        <circle cx="0" cy="0" r="195" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+        <circle cx="0" cy="0" r="185" fill="#334155" stroke="#1e293b" stroke-width="3"/>
+        <circle cx="0" cy="0" r="175" fill="#0f172a"/>
+
+        <!-- Dual 6-Spoke Twin Pattern (Enkei RPF1 iconic 2x6 design) -->
+        <g stroke="url(#silverRim)" stroke-width="14" stroke-linecap="round">
+          <!-- Spoke Pair 1 (Top) -->
+          <line x1="-12" y1="-50" x2="-25" y2="-175"/>
+          <line x1="12" y1="-50" x2="25" y2="-175"/>
+          <!-- Spoke Pair 2 (Top Right) -->
+          <line x1="42" y1="-30" x2="148" y2="-92"/>
+          <line x1="52" y1="-12" x2="168" y2="-52"/>
+          <!-- Spoke Pair 3 (Bottom Right) -->
+          <line x1="52" y1="12" x2="168" y2="52"/>
+          <line x1="42" y1="30" x2="148" y2="92"/>
+          <!-- Spoke Pair 4 (Bottom) -->
+          <line x1="12" y1="50" x2="25" y2="175"/>
+          <line x1="-12" y1="50" x2="-25" y2="175"/>
+          <!-- Spoke Pair 5 (Bottom Left) -->
+          <line x1="-42" y1="30" x2="-148" y2="92"/>
+          <line x1="-52" y1="12" x2="-168" y2="52"/>
+          <!-- Spoke Pair 6 (Top Left) -->
+          <line x1="-52" y1="-12" x2="-168" y2="-52"/>
+          <line x1="-42" y1="-30" x2="-148" y2="-92"/>
+        </g>
+
+        <!-- Center Hub -->
+        <circle cx="0" cy="0" r="60" fill="url(#hubCenter)" stroke="#64748b" stroke-width="3"/>
+        <circle cx="0" cy="0" r="28" fill="#020617"/>
+
+        <!-- 5 Lug Holes (5x114.3) with Chrome Acorn Lug Nuts -->
+        <g fill="#e2e8f0" stroke="#0f172a" stroke-width="2">
+          <circle cx="0" cy="-38" r="7"/>
+          <circle cx="36" cy="-12" r="7"/>
+          <circle cx="22" cy="31" r="7"/>
+          <circle cx="-22" cy="31" r="7"/>
+          <circle cx="-36" cy="-12" r="7"/>
+        </g>
+
+        <!-- Enkei Blue Logo Stamp on Rim Lip -->
+        <g transform="translate(0, -188)">
+          <rect x="-25" y="-7" width="50" height="14" rx="3" fill="#003580"/>
+          <text x="0" y="3" font-family="'Arial Black', sans-serif" font-size="8" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle">ENKEI</text>
+        </g>
+      </g>
+    </svg>
+  `),
+
+  // 16. Castrol EDGE 5W-30 Advanced Full Synthetic Engine Oil 4L
+  'castrol-edge': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="goldBottle" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#b45309"/>
+          <stop offset="25%" stop-color="#f59e0b"/>
+          <stop offset="50%" stop-color="#fbbf24"/>
+          <stop offset="75%" stop-color="#d97706"/>
+          <stop offset="100%" stop-color="#78350f"/>
+        </linearGradient>
+        <linearGradient id="redCap" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#b91c1c"/>
+          <stop offset="50%" stop-color="#ef4444"/>
+          <stop offset="100%" stop-color="#991b1b"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="520" rx="180" ry="24" fill="#000000" opacity="0.18" filter="blur(16px)"/>
+
+      <g transform="translate(170, 110)">
+        <!-- Red Pour Spout Cap -->
+        <rect x="50" y="10" width="50" height="35" rx="6" fill="url(#redCap)" stroke="#7f1d1d" stroke-width="2"/>
+        <line x1="60" y1="18" x2="90" y2="18" stroke="#fecaca" stroke-width="2"/>
+        <line x1="60" y1="28" x2="90" y2="28" stroke="#fecaca" stroke-width="2"/>
+
+        <!-- Premium Gold Bottle Contoured Body -->
+        <path d="M 45 45 L 105 45 L 115 90 L 220 120 C 240 125, 255 145, 255 170 L 255 380 C 255 400, 240 410, 220 410 L 35 410 C 15 410, 5 400, 5 380 L 5 170 C 5 145, 20 125, 40 120 Z" fill="url(#goldBottle)" stroke="#78350f" stroke-width="3"/>
+
+        <!-- Integrated Handle Grips -->
+        <path d="M 125 150 C 125 135, 175 135, 195 150 C 205 160, 205 210, 185 220 C 165 230, 125 210, 125 150 Z" fill="#FFFFFF" stroke="#b45309" stroke-width="2"/>
+
+        <!-- Front Label Graphic -->
+        <rect x="25" y="220" width="210" height="175" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+        
+        <!-- Castrol Green & Red Header -->
+        <rect x="35" y="230" width="190" height="38" rx="4" fill="#007A33"/>
+        <text x="130" y="256" font-family="'Arial Black', Impact, sans-serif" font-size="22" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle">Castrol</text>
+        <circle cx="188" cy="248" r="5" fill="#E31B23"/>
+
+        <!-- EDGE Titanium FST Badge -->
+        <text x="130" y="295" font-family="'Arial Black', sans-serif" font-size="24" font-weight="900" font-style="italic" fill="#fbbf24" text-anchor="middle">EDGE</text>
+        <text x="130" y="318" font-family="'Arial Black', sans-serif" font-size="16" font-weight="900" fill="#FFFFFF" text-anchor="middle">5W-30 LL</text>
+        <text x="130" y="340" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">FLUID TITANIUM TECHNOLOGY</text>
+        <text x="130" y="360" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#a1a1aa" text-anchor="middle">FULL SYNTHETIC • 4L</text>
+      </g>
+    </svg>
+  `),
+
+  // 17. Ohlins Performance Rear Monoshock with Piggyback Resevoir
+  'ohlins-shock': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="ohlinsGold" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#b45309"/>
+          <stop offset="35%" stop-color="#fef08a"/>
+          <stop offset="60%" stop-color="#eab308"/>
+          <stop offset="100%" stop-color="#854d0e"/>
+        </linearGradient>
+        <linearGradient id="ohlinsYellow" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ca8a04"/>
+          <stop offset="40%" stop-color="#fde047"/>
+          <stop offset="70%" stop-color="#eab308"/>
+          <stop offset="100%" stop-color="#a16207"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="515" rx="170" ry="22" fill="#000000" opacity="0.18" filter="blur(15px)"/>
+
+      <g transform="translate(280, 270) rotate(-12)">
+        <!-- Top Mounting Eyelet -->
+        <circle cx="0" cy="-180" r="32" fill="url(#ohlinsGold)" stroke="#78350f" stroke-width="3"/>
+        <circle cx="0" cy="-180" r="14" fill="#0f172a"/>
+
+        <!-- Piggyback Subtank Reservoir (Gold Anodized Aluminium) -->
+        <g transform="translate(65, -160)">
+          <rect x="0" y="0" width="60" height="135" rx="14" fill="url(#ohlinsGold)" stroke="#78350f" stroke-width="3"/>
+          <line x1="-20" y1="30" x2="0" y2="30" stroke="#78350f" stroke-width="12" stroke-linecap="round"/>
+          <rect x="8" y="15" width="44" height="28" rx="4" fill="#00529b"/>
+          <text x="30" y="34" font-family="'Arial Black', sans-serif" font-size="10" font-weight="900" font-style="italic" fill="#FFCC00" text-anchor="middle">ÖHLINS</text>
+          <!-- Compression Clicker Knob -->
+          <circle cx="30" cy="-10" r="10" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+        </g>
+
+        <!-- Main Damper Body & Shaft -->
+        <rect x="-24" y="-150" width="48" height="260" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+        <rect x="-14" y="-30" width="28" height="150" fill="#cbd5e1"/>
+
+        <!-- Iconic Ohlins Yellow Racing Spring -->
+        <g fill="none" stroke="url(#ohlinsYellow)" stroke-width="26" stroke-linecap="round">
+          <path d="M-50 -100 Q 0 -115, 50 -95"/>
+          <path d="M-50 -50 Q 0 -65, 50 -45"/>
+          <path d="M-50 0 Q 0 -15, 50 5"/>
+          <path d="M-50 50 Q 0 35, 50 55"/>
+          <path d="M-50 100 Q 0 85, 50 105"/>
+        </g>
+
+        <!-- Bottom Eyelet & Rebound Dial -->
+        <circle cx="0" cy="180" r="32" fill="url(#ohlinsGold)" stroke="#78350f" stroke-width="3"/>
+        <circle cx="0" cy="180" r="14" fill="#0f172a"/>
+        <circle cx="0" cy="140" r="10" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+      </g>
+    </svg>
+  `),
+
+  // 18. Denso Iridium TT Spark Plugs (4-Pack)
+  'denso-sparkplug': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="densoSteel" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#475569"/>
+          <stop offset="35%" stop-color="#cbd5e1"/>
+          <stop offset="70%" stop-color="#f8fafc"/>
+          <stop offset="100%" stop-color="#334155"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="510" rx="160" ry="22" fill="#000000" opacity="0.18" filter="blur(15px)"/>
+
+      <g transform="translate(300, 300) rotate(45)">
+        <!-- Threaded Lower Base & 0.4mm Twin-Tip Iridium Center Electrode -->
+        <rect x="-18" y="90" width="36" height="90" fill="url(#densoSteel)" stroke="#1e293b" stroke-width="2"/>
+        <line x1="-18" y1="105" x2="18" y2="105" stroke="#1e293b" stroke-width="3"/>
+        <line x1="-18" y1="125" x2="18" y2="125" stroke="#1e293b" stroke-width="3"/>
+        <line x1="-18" y1="145" x2="18" y2="145" stroke="#1e293b" stroke-width="3"/>
+        <line x1="-18" y1="165" x2="18" y2="165" stroke="#1e293b" stroke-width="3"/>
+
+        <!-- Ground J-Gap Electrode -->
+        <path d="M-8 180 L -8 205 L 4 205" stroke="#cbd5e1" stroke-width="5" fill="none" stroke-linecap="square"/>
+        <!-- Fine Needle Twin Tip -->
+        <rect x="-2" y="180" width="4" height="15" fill="#38bdf8"/>
+
+        <!-- Metal Hex Nut Shell -->
+        <polygon points="-32,50 32,50 40,80 32,90 -32,90 -40,80" fill="url(#densoSteel)" stroke="#1e293b" stroke-width="3"/>
+
+        <!-- White Ceramic Insulator Ribs -->
+        <rect x="-22" y="-120" width="44" height="170" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+        <!-- 5 Corrugated Ribs -->
+        <circle cx="0" cy="-60" r="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+        <circle cx="0" cy="-80" r="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+        <circle cx="0" cy="-100" r="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+
+        <!-- Denso Red Stamping -->
+        <g transform="translate(0, -10)">
+          <text x="0" y="0" font-family="'Arial Black', sans-serif" font-size="11" font-weight="900" fill="#E60012" text-anchor="middle">DENSO</text>
+          <text x="0" y="13" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#0284c7" text-anchor="middle">IRIDIUM TT</text>
+        </g>
+
+        <!-- Top Brass Terminal Stud -->
+        <rect x="-8" y="-145" width="16" height="25" rx="4" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+      </g>
+    </svg>
+  `),
+
+  // 19. Brembo GT 6-Piston Performance Big Brake Kit (BBK)
+  'brembo-bbk': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <radialGradient id="discDrilled" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1e293b"/>
+          <stop offset="45%" stop-color="#e2e8f0"/>
+          <stop offset="50%" stop-color="#cbd5e1"/>
+          <stop offset="75%" stop-color="#f8fafc"/>
+          <stop offset="90%" stop-color="#cbd5e1"/>
+          <stop offset="100%" stop-color="#475569"/>
+        </radialGradient>
+        <linearGradient id="yellowCaliper" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fef08a"/>
+          <stop offset="35%" stop-color="#facc15"/>
+          <stop offset="75%" stop-color="#eab308"/>
+          <stop offset="100%" stop-color="#ca8a04"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="515" rx="210" ry="24" fill="#000000" opacity="0.18" filter="blur(16px)"/>
+
+      <g transform="translate(300, 310)">
+        <!-- Two-Piece Floating Rotor 355mm with Drilled Holes -->
+        <circle cx="0" cy="0" r="220" fill="url(#discDrilled)" stroke="#64748b" stroke-width="3"/>
+        <circle cx="0" cy="0" r="140" fill="none" stroke="#94a3b8" stroke-width="2"/>
+        
+        <!-- Drilled Pattern Ring -->
+        <g fill="#1e293b">
+          <circle cx="-130" cy="-100" r="4.5"/>
+          <circle cx="-155" cy="-75" r="4.5"/>
+          <circle cx="130" cy="100" r="4.5"/>
+          <circle cx="155" cy="75" r="4.5"/>
+          <circle cx="-100" cy="130" r="4.5"/>
+          <circle cx="-75" cy="155" r="4.5"/>
+          <circle cx="100" cy="-130" r="4.5"/>
+          <circle cx="75" cy="-155" r="4.5"/>
+          <circle cx="-160" cy="0" r="4.5"/>
+          <circle cx="160" cy="0" r="4.5"/>
+          <circle cx="0" cy="-160" r="4.5"/>
+          <circle cx="0" cy="160" r="4.5"/>
+        </g>
+
+        <!-- Anodized Gold/Black Bell Center Hat with Floating Bobbins -->
+        <circle cx="0" cy="0" r="115" fill="#0f172a" stroke="#ca8a04" stroke-width="3"/>
+        <circle cx="0" cy="0" r="42" fill="#020617"/>
+        
+        <!-- 10 Floating Drive Bobbins -->
+        <g fill="#ca8a04">
+          <circle cx="0" cy="-115" r="6"/>
+          <circle cx="67.5" cy="-93" r="6"/>
+          <circle cx="109" cy="-35.5" r="6"/>
+          <circle cx="109" cy="35.5" r="6"/>
+          <circle cx="67.5" cy="93" r="6"/>
+          <circle cx="0" cy="115" r="6"/>
+          <circle cx="-67.5" cy="93" r="6"/>
+          <circle cx="-109" cy="35.5" r="6"/>
+          <circle cx="-109" cy="-35.5" r="6"/>
+          <circle cx="-67.5" cy="-93" r="6"/>
+        </g>
+      </g>
+
+      <!-- Brembo Racing Yellow Monobloc 6-Piston Caliper -->
+      <g transform="translate(340, 110)">
+        <path d="M-20 60 C 20 20, 80 0, 150 10 C 180 15, 200 40, 195 70 C 190 120, 175 180, 135 220 C 105 250, 75 255, 45 235 C 20 215, 10 180, 15 150 C -5 130, -20 100, -20 60 Z" 
+              fill="url(#yellowCaliper)" stroke="#ca8a04" stroke-width="3"/>
+        
+        <!-- Caliper highlights & 3 Big Piston Outlines -->
+        <circle cx="110" cy="75" r="22" fill="#ca8a04" stroke="#a16207" stroke-width="2"/>
+        <circle cx="85" cy="130" r="22" fill="#ca8a04" stroke="#a16207" stroke-width="2"/>
+        <circle cx="55" cy="185" r="22" fill="#ca8a04" stroke="#a16207" stroke-width="2"/>
+
+        <!-- Black Brembo Signature Stamp on Caliper -->
+        <g transform="translate(70, 120) rotate(52)">
+          <circle cx="8" cy="8" r="6" fill="#000000"/>
+          <circle cx="8" cy="8" r="3" fill="#facc15"/>
+          <text x="18" y="12" font-family="'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="900" fill="#000000" letter-spacing="-0.5">brembo</text>
+        </g>
+      </g>
+    </svg>
+  `),
+
+  // 20. DID 520 VR46 Limited Edition Gold & Black Motorcycle Chain
+  'did-chain-gold': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="goldPlate" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fef08a"/>
+          <stop offset="40%" stop-color="#facc15"/>
+          <stop offset="80%" stop-color="#ca8a04"/>
+          <stop offset="100%" stop-color="#854d0e"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="515" rx="190" ry="24" fill="#000000" opacity="0.18" filter="blur(16px)"/>
+
+      <g transform="translate(130, 200)">
+        <!-- 4 Interlocking Gold & Black Drive Chain Links -->
+        <!-- Link 1 -->
+        <g transform="translate(0, 50)">
+          <path d="M 30 10 C 45 10, 55 20, 55 35 C 55 50, 45 60, 30 60 L 100 60 C 115 60, 125 50, 125 35 C 125 20, 115 10, 100 10 Z" fill="url(#goldPlate)" stroke="#854d0e" stroke-width="3"/>
+          <circle cx="45" cy="35" r="14" fill="#0f172a" stroke="#ca8a04" stroke-width="2"/>
+          <circle cx="110" cy="35" r="14" fill="#0f172a" stroke="#ca8a04" stroke-width="2"/>
+          <text x="77" y="38" font-family="'Arial Black', sans-serif" font-size="9" font-weight="900" fill="#000000" text-anchor="middle">D.I.D</text>
+        </g>
+
+        <!-- Link 2 -->
+        <g transform="translate(65, 50)">
+          <path d="M 30 10 C 45 10, 55 20, 55 35 C 55 50, 45 60, 30 60 L 100 60 C 115 60, 125 50, 125 35 C 125 20, 115 10, 100 10 Z" fill="#18181b" stroke="#71717a" stroke-width="3"/>
+          <circle cx="45" cy="35" r="14" fill="url(#goldPlate)" stroke="#3f3f46" stroke-width="2"/>
+          <circle cx="110" cy="35" r="14" fill="url(#goldPlate)" stroke="#3f3f46" stroke-width="2"/>
+          <text x="77" y="38" font-family="'Arial Black', sans-serif" font-size="8" font-weight="bold" fill="#facc15" text-anchor="middle">520VX3</text>
+        </g>
+
+        <!-- Link 3 -->
+        <g transform="translate(130, 50)">
+          <path d="M 30 10 C 45 10, 55 20, 55 35 C 55 50, 45 60, 30 60 L 100 60 C 115 60, 125 50, 125 35 C 125 20, 115 10, 100 10 Z" fill="url(#goldPlate)" stroke="#854d0e" stroke-width="3"/>
+          <circle cx="45" cy="35" r="14" fill="#0f172a" stroke="#ca8a04" stroke-width="2"/>
+          <circle cx="110" cy="35" r="14" fill="#0f172a" stroke="#ca8a04" stroke-width="2"/>
+          <text x="77" y="38" font-family="'Arial Black', sans-serif" font-size="9" font-weight="900" fill="#000000" text-anchor="middle">JAPAN</text>
+        </g>
+
+        <!-- Link 4 -->
+        <g transform="translate(195, 50)">
+          <path d="M 30 10 C 45 10, 55 20, 55 35 C 55 50, 45 60, 30 60 L 100 60 C 115 60, 125 50, 125 35 C 125 20, 115 10, 100 10 Z" fill="#18181b" stroke="#71717a" stroke-width="3"/>
+          <circle cx="45" cy="35" r="14" fill="url(#goldPlate)" stroke="#3f3f46" stroke-width="2"/>
+          <circle cx="110" cy="35" r="14" fill="url(#goldPlate)" stroke="#3f3f46" stroke-width="2"/>
+          <text x="77" y="38" font-family="'Arial Black', sans-serif" font-size="8" font-weight="bold" fill="#facc15" text-anchor="middle">X-RING</text>
         </g>
       </g>
     </svg>

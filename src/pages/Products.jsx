@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Search,
@@ -9,6 +9,8 @@ import {
   X,
   CheckCircle2,
   Package,
+  Sparkles,
+  ArrowRight,
 } from 'lucide-react';
 import { products } from '../data/products';
 import { ProductGrid } from '../components/products/ProductGrid';
@@ -209,6 +211,30 @@ export const Products = () => {
               </button>
             </div>
           )}
+
+          {/* Smart Recommendation Banner Trigger */}
+          <div className="mt-4 p-4 rounded-2xl bg-gradient-to-r from-red-950/40 via-[#161B28] to-amber-950/30 border border-red-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-[#E63946]/20 text-[#FF6B6B] shrink-0">
+                <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-white block">
+                  เลือกไม่ถูก หรือไม่แน่ใจว่าจะต้องเปลี่ยนชิ้นไหน?
+                </span>
+                <p className="text-xs text-slate-300">
+                  ลองใช้ <strong className="text-amber-300">ระบบผู้ช่วยแนะนำอะไหล่อัจฉริยะ</strong> ค้นหาตามอาการ/ปัญหา หรือทำแบบประเมิน 3 ข้อ
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/recommendations"
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] hover:brightness-110 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shrink-0 cursor-pointer transition-all"
+            >
+              <span>เปิดระบบแนะนำสินค้า</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
 
           {/* Active Filter Chips */}
           {(filters.categories.length > 0 || filters.brands.length > 0 || searchQuery || filters.promoOnly) && (

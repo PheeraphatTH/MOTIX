@@ -16,6 +16,7 @@ import {
   Zap,
   Globe,
   SlidersHorizontal,
+  Sparkles,
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { MotixBrandLogo } from '../common/MotixBrandLogo';
@@ -35,6 +36,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
   const navItems = [
     { name: t('nav.home'), path: '/', icon: Home },
     { name: t('nav.products'), path: '/products', icon: Package },
+    { name: t('nav.recommendations') || 'แนะนำสินค้า', path: '/recommendations', icon: Sparkles, badge: 'AI', special: true },
     { name: t('nav.categories'), path: '/categories', icon: Layers },
     { name: t('nav.promotions'), path: '/promotions', icon: Flame, badge: 'HOT' },
     { name: t('nav.about'), path: '/about', icon: Info },

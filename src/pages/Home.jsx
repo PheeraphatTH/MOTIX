@@ -1,6 +1,7 @@
 import React from 'react';
 import { Hero } from '../components/home/Hero';
 import { VehicleFinder } from '../components/home/VehicleFinder';
+import { SmartRecommendationSection } from '../components/home/SmartRecommendationSection';
 import { Categories } from '../components/home/Categories';
 import { FeaturedProducts } from '../components/home/FeaturedProducts';
 import { FlashSale } from '../components/home/FlashSale';
@@ -15,13 +16,16 @@ export const Home = () => {
       {/* 1. Hero Section */}
       <Hero />
 
-      {/* 2. Vehicle Finder Tool */}
+      {/* 2. Smart Recommendation Section (ระบบแนะนำอะไหล่อัจฉริยะ & แบบฟอร์มคัดกรอง) - ย้ายขึ้นบนสุดเพื่อให้เห็นทันที */}
+      <SmartRecommendationSection />
+
+      {/* 3. Vehicle Finder Tool */}
       <VehicleFinder />
 
-      {/* 3. Flash Sale Deal of the Day with react-countdown */}
+      {/* 4. Flash Sale Deal of the Day with react-countdown */}
       <FlashSale />
 
-      {/* 4. Product Categories */}
+      {/* 5. Product Categories */}
       <Categories />
 
       {/* 5. Featured Products & Best Sellers */}

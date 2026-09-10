@@ -13,6 +13,7 @@ import {
   ChevronDown,
   LogOut,
   Zap,
+  Sparkles,
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { MotixBrandLogo } from '../common/MotixBrandLogo';
@@ -59,6 +60,7 @@ export const Navbar = ({ onOpenMobileMenu }) => {
   const navLinks = [
     { name: t('nav.home'), path: '/' },
     { name: t('nav.products'), path: '/products' },
+    { name: t('nav.recommendations') || 'แนะนำสินค้า', path: '/recommendations', special: true },
     { name: t('nav.categories'), path: '/categories' },
     { name: t('nav.promotions'), path: '/promotions', highlight: true },
     { name: t('nav.about'), path: '/about' },
@@ -309,14 +311,19 @@ export const Navbar = ({ onOpenMobileMenu }) => {
                 <NavLink
                   key={link.path}
                   to={link.path}
-                  className={`px-3 py-1.5 rounded-lg text-xs xl:text-sm font-semibold transition-all relative ${
+                  className={`px-3 py-1.5 rounded-lg text-xs xl:text-sm font-semibold transition-all relative flex items-center gap-1.5 ${
                     isActive
                       ? 'text-white bg-[#1A202C] border border-[#2D3748]'
+                      : link.special
+                      ? 'text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 font-bold'
                       : link.highlight
                       ? 'text-[#FF6B6B] hover:bg-red-500/10 font-bold'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   }`}
                 >
+                  {link.special && (
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                  )}
                   {link.highlight && (
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#E63946] mr-1.5 animate-ping"></span>
                   )}

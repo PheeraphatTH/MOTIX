@@ -15,6 +15,7 @@ import { FAQ } from '../pages/FAQ';
 import { Wishlist } from '../pages/Wishlist';
 import { Login } from '../pages/Login';
 import { Register } from '../pages/Register';
+import { Recommendations } from '../pages/Recommendations';
 
 export const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ export const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/products" element={<Products />} />
       <Route path="/products/:id" element={<ProductDetail />} />
+      <Route path="/recommendations" element={<Recommendations />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/promotions" element={<Promotions />} />
       <Route path="/cart" element={<Cart />} />

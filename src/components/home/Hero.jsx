@@ -90,6 +90,22 @@ export const Hero = () => {
                 {t('hero.shopNow')}
               </Button>
 
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById('smart-recommendation-section');
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  } else {
+                    navigate('/recommendations?mode=form');
+                  }
+                }}
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-red-600/30 via-amber-600/30 to-red-600/20 hover:from-red-600/40 hover:to-amber-600/40 text-amber-300 hover:text-white border border-amber-500/40 text-sm font-black flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                <span>แบบฟอร์มคัดกรองอะไหล่ตรงรุ่น</span>
+              </button>
+
               <Button
                 variant="outline"
                 size="lg"
