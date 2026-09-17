@@ -7,6 +7,7 @@ import { CartProvider } from './context/CartContext';
 import { AnnouncementBar } from './components/layout/AnnouncementBar';
 import { Navbar } from './components/layout/Navbar';
 import { MobileMenu } from './components/layout/MobileMenu';
+import { SlidebarTab } from './components/layout/SlidebarTab';
 import { Footer } from './components/layout/Footer';
 import { AppRoutes } from './routes/AppRoutes';
 import { QuickViewModal } from './components/products/QuickViewModal';
@@ -25,10 +26,16 @@ function AppContent() {
         {/* 2. Main Sticky Navigation */}
         <Navbar onOpenMobileMenu={() => setMobileMenuOpen(true)} />
 
-        {/* 3. Mobile Navigation Drawer */}
+        {/* 3. Mobile / Desktop Navigation Drawer */}
         <MobileMenu
           isOpen={mobileMenuOpen}
           onClose={() => setMobileMenuOpen(false)}
+        />
+
+        {/* 3.1 Persistent Floating Slidebar Tab */}
+        <SlidebarTab
+          isOpen={mobileMenuOpen}
+          onOpen={() => setMobileMenuOpen(true)}
         />
 
         {/* 4. Dynamic Page Content Routes */}

@@ -77,14 +77,18 @@ export const Navbar = ({ onOpenMobileMenu }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-3 sm:gap-6">
           
-          {/* 1. Mobile Menu Button & Brand Logo */}
-          <div className="flex items-center gap-3">
+          {/* 1. Slidebar Menu Button & Brand Logo */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <button
               onClick={onOpenMobileMenu}
-              className="lg:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none"
-              aria-label="Open Menu"
+              className="p-2 sm:px-3 sm:py-2 rounded-xl text-slate-300 hover:text-white bg-[#121622] hover:bg-[#1A202C] border border-[#232B3D] hover:border-[#E63946]/60 focus:outline-none flex items-center gap-2 transition-all cursor-pointer shadow-sm group"
+              aria-label="Open Slidebar Menu"
+              title="เปิดแท็บสไลด์บาร์เมนู (Slidebar Menu)"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5 text-[#E63946] group-hover:scale-110 transition-transform" />
+              <span className="hidden sm:inline-block text-xs font-bold text-slate-200 group-hover:text-white tracking-wide">
+                เมนู
+              </span>
             </button>
 
             {/* Logo */}

@@ -1,16 +1,30 @@
 // Centralized API configuration that handles local/fullstack environments and GitHub Pages static hosting
 
+// Live Cloud Run backend with full Node.js Express + Gmail SMTP service
+export const CLOUD_BACKEND_URL = 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app';
+
 export const isStaticHosting = () => {
-  return typeof window !== 'undefined' && window.location.hostname.includes('github.io');
+  if (typeof window === 'undefined') return false;
+  const host = window.location.hostname;
+  return (
+    host.includes('github.io') ||
+    host.includes('github') ||
+    (!host.includes('run.app') && host !== 'localhost' && host !== '127.0.0.1')
+  );
 };
 
 export const getApiBase = () => {
-  // In VS Code or AI Studio full-stack container, use relative path to hit the Express server
+  if (isStaticHosting()) {
+    return CLOUD_BACKEND_URL;
+  }
   return '';
 };
 
 export const getApiUrl = (path) => {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  if (isStaticHosting()) {
+    return `${CLOUD_BACKEND_URL}${cleanPath}`;
+  }
   return cleanPath;
 };
 
@@ -20,7 +34,7 @@ export const getApiUrl = (path) => {
  */
 export const getStoreBaseUrl = () => {
   if (typeof window === 'undefined') {
-    return 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app';
+    return CLOUD_BACKEND_URL;
   }
 
   const origin = window.location.origin;
@@ -31,4 +45,5 @@ export const getStoreBaseUrl = () => {
 
   return `${origin}${pathname}`;
 };
+
 

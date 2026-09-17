@@ -196,15 +196,6 @@ export const EmailPreviewModal = ({
       return;
     }
 
-    if (isGitHubPages) {
-      setSendResult({
-        success: false,
-        isGitHubPages: true,
-        message: '⚠️ บน GitHub Pages เป็น Static Hosting ไม่มีเซิร์ฟเวอร์ Node.js รันอยู่เบื้องหลัง จึงไม่สามารถส่ง Gmail SMTP ได้ตรงๆ กรุณาทดสอบส่งจริงผ่านหน้าต่าง Preview ของ AI Studio (หน้านี้) หรือรันใน VS Code',
-      });
-      return;
-    }
-
     setIsSending(true);
     setSendResult(null);
 
@@ -610,13 +601,13 @@ export const EmailPreviewModal = ({
               </div>
             </div>
 
-            {/* Static Hosting Advisory for GitHub Pages */}
+            {/* Cloud Backend Connected Indicator for GitHub Pages */}
             {isGitHubPages && (
-              <div className="bg-amber-500/10 border-b border-amber-500/25 px-5 py-2.5 text-xs text-amber-300 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">ℹ️</span>
+              <div className="bg-emerald-500/10 border-b border-emerald-500/25 px-5 py-2 text-xs text-emerald-300 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                   <span>
-                    <strong>โหมด GitHub Pages:</strong> แสดงตัวอย่างอีเมล HTML สวยงามครบ 100% (หากต้องการทดลองส่งเข้ากล่องข้อความจริง สามารถกดส่งได้ในหน้า Preview ของ AI Studio หรือตอนรันบน VS Code ในเครื่องของคุณ)
+                    <strong>โหมด GitHub Pages:</strong> เชื่อมต่อกับ Cloud Run Backend อัตโนมัติ สามารถกดปุ่มส่งอีเมลจริงเข้า Gmail ได้ทันทีโดยไม่ต้องโคลนลงเครื่อง
                   </span>
                 </div>
               </div>
