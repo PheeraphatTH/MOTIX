@@ -14,7 +14,7 @@ export const SectionTitle = ({
     <div className={`flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 ${className}`}>
       <div className={`flex flex-col ${alignmentClass}`}>
         {tagline && (
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-[#FF6B6B] text-xs font-bold uppercase tracking-wider mb-2.5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-[#E63946] text-xs font-bold uppercase tracking-wider mb-2.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#E63946] animate-pulse"></span>
             <span>{tagline}</span>
           </div>

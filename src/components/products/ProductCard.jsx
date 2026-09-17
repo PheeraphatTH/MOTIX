@@ -150,8 +150,8 @@ export const ProductCard = ({ product }) => {
               </span>
             )}
             {product.discount > 0 && (
-              <span className="text-xs font-extrabold text-[#E63946]">
-                -{product.discount}%
+              <span className="text-[11px] font-extrabold px-1.5 py-0.5 rounded bg-red-500/20 text-[#FF6B6B] border border-red-500/30">
+                ลด {product.discount}%
               </span>
             )}
           </div>
@@ -165,7 +165,7 @@ export const ProductCard = ({ product }) => {
               addToCart(product, 1);
             }}
             disabled={product.stock <= 0}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white flex items-center justify-center hover:brightness-110 active:scale-95 transition-all shadow-md shadow-red-950/40 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shrink-0"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] hover:from-[#FF4D5E] hover:to-[#D62839] text-white flex items-center justify-center active:scale-95 transition-all shadow-md shadow-red-950/40 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shrink-0"
             title="เพิ่มลงตะกร้า"
           >
             <ShoppingCart className="w-4 h-4" />

@@ -39,7 +39,7 @@ export const FeaturedProducts = () => {
               onClick={() => setFilterType('all')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 filterType === 'all'
-                  ? 'bg-[#E63946] text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-md shadow-red-950/40'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -49,7 +49,7 @@ export const FeaturedProducts = () => {
               onClick={() => setFilterType('car')}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 filterType === 'car'
-                  ? 'bg-[#E63946] text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-md shadow-red-950/40'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -60,7 +60,7 @@ export const FeaturedProducts = () => {
               onClick={() => setFilterType('motorcycle')}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 filterType === 'motorcycle'
-                  ? 'bg-[#FF5722] text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-md shadow-red-950/40'
                   : 'text-slate-400 hover:text-white'
               }`}
             >

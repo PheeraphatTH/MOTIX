@@ -104,12 +104,12 @@ export const Navbar = ({ onOpenMobileMenu }) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('nav.searchPlaceholder')}
-                className="w-full bg-[#141822] text-sm text-slate-100 placeholder-slate-400 pl-10 pr-24 py-2.5 rounded-xl border border-[#2B3448] focus:border-[#E63946] focus:ring-1 focus:ring-[#E63946] focus:outline-none transition-colors"
+                className="w-full bg-[#131720] text-sm text-slate-100 placeholder-slate-400 pl-10 pr-24 py-2.5 rounded-xl border border-[#262F42] focus:border-[#E63946] focus:ring-1 focus:ring-[#E63946] focus:outline-none transition-colors"
               />
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" />
               <button
                 type="submit"
-                className="absolute right-1.5 px-3 py-1 bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white text-xs font-bold rounded-lg hover:brightness-110 transition-all cursor-pointer"
+                className="absolute right-1.5 px-3 py-1 bg-gradient-to-r from-[#E63946] to-[#C1121F] hover:from-[#FF4D5E] hover:to-[#D62839] text-white text-xs font-bold rounded-lg transition-all cursor-pointer shadow-sm"
               >
                 ค้นหา
               </button>
@@ -291,7 +291,7 @@ export const Navbar = ({ onOpenMobileMenu }) => {
                   </Link>
                   <Link
                     to="/register"
-                    className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] text-xs font-bold text-white shadow-md hover:brightness-110 transition-all"
+                    className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-gradient-to-r from-[#E63946] to-[#C1121F] hover:from-[#FF4D5E] hover:to-[#D62839] text-xs font-bold text-white shadow-md shadow-red-950/40 transition-all"
                   >
                     <span className="hidden sm:inline-block">สมัครสมาชิก</span>
                     <span className="px-1.5 py-0.5 rounded-full bg-black/30 text-[10px] text-amber-300 font-mono font-bold">+100 แต้ม</span>

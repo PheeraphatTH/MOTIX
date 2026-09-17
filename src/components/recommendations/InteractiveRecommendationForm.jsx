@@ -5,18 +5,12 @@ import {
   Car,
   Bike,
   Wrench,
-  Gauge,
-  HelpCircle,
-  SlidersHorizontal,
   RotateCcw,
   CheckCircle2,
   AlertTriangle,
   ArrowRight,
-  Filter,
-  PackageCheck,
   ChevronDown,
-  Layers,
-  Coins,
+  PackageCheck,
 } from 'lucide-react';
 import { vehicleData } from '../../data/vehicles';
 import { categories } from '../../data/categories';
@@ -28,54 +22,41 @@ import { useCart } from '../../context/CartContext';
 const GOAL_OPTIONS = [
   {
     id: 'all',
-    label: 'ทุกความต้องการ (ทั้งหมด)',
-    icon: '✨',
-    desc: 'ดูรายการอะไหล่แนะนำทั้งหมดที่ตรงกับรุ่นรถของคุณ',
+    label: 'ทุกความต้องการ',
+    desc: 'ดูรายการแนะนำทั้งหมดที่ตรงกับรถของคุณ',
   },
   {
     id: 'maintenance',
-    label: 'เช็กระยะ / ถ่ายของเหลวตามรอบ',
-    icon: '🛢️',
-    desc: 'น้ำมันเครื่อง, ไส้กรองอากาศ, กรองน้ำมันเครื่อง, หัวเทียน',
+    label: 'เช็กระยะ / ของเหลว',
+    desc: 'น้ำมันเครื่อง, ไส้กรอง, กรองอากาศ, หัวเทียน',
     categories: ['engine-oil', 'filters', 'engine-parts'],
   },
   {
     id: 'repair-safety',
-    label: 'ซ่อมแซม / ระบบเบรก & ความปลอดภัย',
-    icon: '🛑',
-    desc: 'ผ้าเบรก, จานเบรก, ยางรถ, ระบบไฟส่องสว่าง',
+    label: 'ซ่อมแซม & ความปลอดภัย',
+    desc: 'ผ้าเบรก, จานเบรก, ยาง, ไฟส่องสว่าง',
     categories: ['brake-system', 'tires-wheels', 'lighting'],
   },
   {
     id: 'performance',
-    label: 'เพิ่มสมรรถนะ / แต่งซิ่ง & ปรับแต่ง',
-    icon: '⚡',
-    desc: 'โช้คอัพแต่ง, ท่อไอเสีย, กรองอากาศ High-Flow, ล้อแม็ก, โซ่สเตอร์',
+    label: 'เพิ่มสมรรถนะ / แต่งซิ่ง',
+    desc: 'โช้คอัพ, ท่อไอเสีย, กรองอากาศแต่ง, ล้อแม็ก',
     categories: ['suspension', 'moto-suspension', 'exhaust-system', 'car-wheels', 'chain-sprocket', 'filters'],
   },
   {
     id: 'electrical',
-    label: 'ระบบสตาร์ต & แบตเตอรี่ไฟฟ้ารถ',
-    icon: '🔋',
-    desc: 'แบตเตอรี่, ไดสตาร์ต, หลอดไฟ LED, หัวเทียนเข็ม',
+    label: 'ระบบไฟ & แบตเตอรี่',
+    desc: 'แบตเตอรี่, ไดสตาร์ต, หลอดไฟ LED',
     categories: ['battery', 'moto-battery', 'lighting', 'engine-parts'],
   },
 ];
 
-// Options for Budget / Price Ranges
+// Budget Range Options
 const BUDGET_OPTIONS = [
-  { id: 'all', label: 'งบประมาณทุกระดับ', sub: 'แสดงอะไหล่ทุกช่วงราคา' },
-  { id: 'under-2000', label: 'ประหยัดคุ้มค่า (ต่ำกว่า ฿2,000)', max: 2000, sub: 'อะไหล่บำรุงรักษาพื้นฐาน / ของเหลว' },
-  { id: '2000-10000', label: 'ระดับกลางมาตรฐาน (฿2,000 - ฿10,000)', min: 2000, max: 10000, sub: 'ชุดเบรก, ยาง, โช้คอัพสตรีท, กรองแต่ง' },
-  { id: 'over-10000', label: 'เกรดพรีเมียม / เรซซิ่ง (฿10,000 ขึ้นไป)', min: 10000, sub: 'ท่อ Akrapovic, โช้ค Öhlins, ล้อ Enkei, Brembo BBK' },
-];
-
-// Options for User Driving Styles
-const DRIVING_STYLE_OPTIONS = [
-  { id: 'any', label: 'ทุกสไตล์การขับขี่', emoji: '🚗' },
-  { id: 'daily', label: 'ใช้งานประจำวัน / เดินทางทำงาน', emoji: '🏙️' },
-  { id: 'sport', label: 'สายซิ่ง / ชื่นชอบความเร็ว & อัตราเร่ง', emoji: '🏁' },
-  { id: 'touring', label: 'เดินทางไกล / ออกทริป / บรรทุกหนัก', emoji: '⛰️' },
+  { id: 'all', label: 'ทุกระดับราคา' },
+  { id: 'under-2000', label: 'ประหยัดคุ้มค่า (ต่ำกว่า ฿2,000)', max: 2000 },
+  { id: '2000-10000', label: 'มาตรฐาน (฿2,000 - ฿10,000)', min: 2000, max: 10000 },
+  { id: 'over-10000', label: 'พรีเมียม / เรซซิ่ง (฿10,000+)', min: 10000 },
 ];
 
 export const InteractiveRecommendationForm = ({ onQuickView }) => {
@@ -88,8 +69,6 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
   const [goal, setGoal] = useState('all');
   const [category, setCategory] = useState('all');
   const [budget, setBudget] = useState('all');
-  const [drivingStyle, setDrivingStyle] = useState('any');
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Available brands & models based on vehicle type
   const availableBrands = vehicleData[vehicleType]?.brands || [];
@@ -102,16 +81,13 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
     return categories.filter((c) => c.vehicleType === vehicleType || c.vehicleType === 'both');
   }, [vehicleType]);
 
-  // Handle Type Change
   const handleVehicleTypeChange = (newType) => {
     setVehicleType(newType);
     setBrand('');
     setModel('');
     setCategory('all');
-    setIsSubmitted(false);
   };
 
-  // Reset all filters
   const handleResetForm = () => {
     setVehicleType('car');
     setBrand('');
@@ -119,8 +95,6 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
     setGoal('all');
     setCategory('all');
     setBudget('all');
-    setDrivingStyle('any');
-    setIsSubmitted(false);
   };
 
   // Compute matching products
@@ -128,7 +102,7 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
     const activeGoalObj = GOAL_OPTIONS.find((g) => g.id === goal);
     const activeBudgetObj = BUDGET_OPTIONS.find((b) => b.id === budget);
 
-    const scored = products
+    return products
       .filter((product) => {
         // 1. Vehicle Type Match
         if (product.vehicleType !== 'both' && product.vehicleType !== vehicleType) {
@@ -155,76 +129,52 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
         return true;
       })
       .map((product) => {
-        let score = 92;
+        let score = 94;
         let reasons = [];
         let isModelDirectMatch = false;
 
-        // Compatibility boost if user selected specific model
+        // Direct vehicle match
         if (model) {
           const matchesCar = product.compatibleVehicles?.some((v) =>
             model.toLowerCase().includes(v.toLowerCase()) || v.toLowerCase().includes(model.toLowerCase())
           );
           if (matchesCar) {
-            score += 6;
+            score = 99;
             isModelDirectMatch = true;
-            reasons.push(`ตรงรุ่น 100% กับ ${model}`);
+            reasons.push(`ตรงรุ่นกับ ${model}`);
           }
         }
 
-        // Brand match boost
-        if (brand && product.compatibleBrands?.includes(brand.toLowerCase())) {
-          score += 2;
-        }
-
-        // Goal match reason
         if (goal === 'maintenance') {
-          reasons.push('เหมาะสำหรับรอบเช็กระยะ ยืดอายุเครื่องยนต์');
+          reasons.push('เหมาะสำหรับรอบบำรุงรักษา');
         } else if (goal === 'repair-safety') {
-          reasons.push('อะไหล่ทดแทนเกรดความปลอดภัยสูงสุด');
+          reasons.push('เกรดความปลอดภัยมาตรฐาน OEM');
         } else if (goal === 'performance') {
-          reasons.push('เพิ่มอัตราเร่ง สมรรถนะ และความสนุกในการขับขี่');
-        } else if (goal === 'electrical') {
-          reasons.push('แก้ปัญหาสตาร์ตติดยากและจ่ายไฟนิ่งเสถียร');
+          reasons.push('เพิ่มสมรรถนะการขับขี่');
         } else {
-          reasons.push('สินค้ามาตรฐานแท้ ได้รับความนิยมสูงสุด');
+          reasons.push('อะไหล่มาตรฐานแท้ 100%');
         }
-
-        // Driving style reason
-        if (drivingStyle === 'sport') {
-          if (['motul-300v', 'brembo', 'akrapovic', 'enkei', 'ohlins'].some((k) => product.sku.toLowerCase().includes(k) || product.brand.toLowerCase().includes(k))) {
-            score += 3;
-            reasons.push('เกรดเรซซิ่งตอบโจทย์สายซิ่ง');
-          }
-        }
-
-        const finalScore = Math.min(99, score);
 
         return {
           ...product,
-          recommendationScore: finalScore,
+          recommendationScore: score,
           recommendationReason: reasons.join(' • '),
           recommendationTags: [
-            isModelDirectMatch ? 'ตรงรุ่นกับรถของคุณ' : 'ตรวจสเปกตรงรุ่น',
-            activeGoalObj?.label?.split('/')[0]?.trim() || 'แนะนำพิเศษ',
-            product.discount > 0 ? `ลด ${product.discount}%` : 'ของแท้ 100%',
+            isModelDirectMatch ? 'ตรงรุ่น 100%' : 'ตรวจสเปกพร้อมใส่',
+            product.discount > 0 ? `ลด ${product.discount}%` : 'ของแท้',
           ],
           isModelDirectMatch,
         };
       })
       .sort((a, b) => {
-        // Prioritize direct model matches, then score
         if (a.isModelDirectMatch && !b.isModelDirectMatch) return -1;
         if (!a.isModelDirectMatch && b.isModelDirectMatch) return 1;
         return b.recommendationScore - a.recommendationScore;
       });
+  }, [vehicleType, brand, model, goal, category, budget]);
 
-    return scored;
-  }, [vehicleType, brand, model, goal, category, budget, drivingStyle]);
-
-  // Sync to global context when user selects a valid vehicle
   const handleApplyForm = (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
     if (brand || model) {
       updateVehicleFilter({
         type: vehicleType,
@@ -233,7 +183,6 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
       });
     }
 
-    // Smooth scroll to results
     const el = document.getElementById('form-recommendation-results');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -241,82 +190,73 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
   };
 
   return (
-    <div className="space-y-8">
-      {/* 1. FORM CONTAINER CARD */}
-      <div className="rounded-3xl bg-gradient-to-b from-[#141824] via-[#10141F] to-[#0D1017] border border-[#263045] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+    <div className="space-y-10">
+      {/* 1. CLEAN FORM CONTAINER CARD */}
+      <div className="rounded-2xl bg-[#11151F] border border-[#202738] p-6 sm:p-8 shadow-xl">
         
-        {/* Glow effect background */}
-        <div className="absolute -top-24 -right-24 w-72 h-72 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
-
         {/* Header inside form */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#20283A]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#1C2333]">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>แบบฟอร์มคัดกรองความต้องการอัจฉริยะ (Smart Filter Form)</span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-black text-white">
-              เลือกตามแบบฟอร์มเพื่อแสดงรายการอะไหล่ที่ตรงใจคุณที่สุด
+            <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              ค้นหาและคัดกรองอะไหล่ตามสเปกรถของคุณ
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              ระบุประเภทรถ ยี่ห้อ รุ่น และวัตถุประสงค์ที่ต้องการ ระบบจะค้นหาและคำนวณสินค้าที่เข้ากันได้มาให้ทันที
+            <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+              เลือกข้อมูลเพื่อแสดงรายการอะไหล่ที่ตรงรุ่นและตรงงบประมาณทันที
             </p>
           </div>
 
           <button
             type="button"
             onClick={handleResetForm}
-            className="self-start md:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#1A2130] hover:bg-[#232C40] text-slate-300 hover:text-white text-xs font-semibold border border-[#2E3A52] transition-colors cursor-pointer"
+            className="self-start sm:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#161B28] hover:bg-[#1E2536] text-slate-300 hover:text-white text-xs font-medium border border-[#263045] transition-colors cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>ล้างค่าทั้งหมด</span>
+            <span>ล้างค่า</span>
           </button>
         </div>
 
-        {/* THE INTERACTIVE FORM */}
+        {/* FORM CONTENT */}
         <form onSubmit={handleApplyForm} className="mt-6 space-y-6">
           
-          {/* FIELD 1: Vehicle Type Tabs */}
+          {/* 1. Vehicle Type Selector */}
           <div>
-            <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-              1. เลือกประเภทรถ (Vehicle Type) <span className="text-red-400">*</span>
+            <label className="block text-xs font-semibold text-slate-300 mb-2">
+              1. ประเภทพาหนะ
             </label>
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-lg">
+            <div className="grid grid-cols-2 gap-3 max-w-md">
               <button
                 type="button"
                 onClick={() => handleVehicleTypeChange('car')}
-                className={`flex items-center justify-center gap-3 p-3.5 rounded-2xl border font-bold text-sm transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                   vehicleType === 'car'
-                    ? 'bg-gradient-to-r from-red-600/30 via-red-700/20 to-transparent border-red-500 text-white shadow-lg shadow-red-950/40 ring-1 ring-red-500/50'
-                    : 'bg-[#151926] hover:bg-[#1C2234] border-[#252E42] text-slate-400'
+                    ? 'bg-[#E63946] border-[#E63946] text-white shadow-sm'
+                    : 'bg-[#151A26] hover:bg-[#1A2030] border-[#222A3C] text-slate-400'
                 }`}
               >
-                <Car className="w-5 h-5 text-red-400" />
-                <span>รถยนต์ (Cars / SUVs / Pickups)</span>
+                <Car className="w-4 h-4" />
+                <span>รถยนต์ (Car / Pickup / SUV)</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleVehicleTypeChange('motorcycle')}
-                className={`flex items-center justify-center gap-3 p-3.5 rounded-2xl border font-bold text-sm transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                   vehicleType === 'motorcycle'
-                    ? 'bg-gradient-to-r from-amber-600/30 via-amber-700/20 to-transparent border-amber-500 text-white shadow-lg shadow-amber-950/40 ring-1 ring-amber-500/50'
-                    : 'bg-[#151926] hover:bg-[#1C2234] border-[#252E42] text-slate-400'
+                    ? 'bg-[#E63946] border-[#E63946] text-white shadow-sm'
+                    : 'bg-[#151A26] hover:bg-[#1A2030] border-[#222A3C] text-slate-400'
                 }`}
               >
-                <Bike className="w-5 h-5 text-amber-400" />
-                <span>มอเตอร์ไซค์ (Motorcycle / BigBike)</span>
+                <Bike className="w-4 h-4" />
+                <span>มอเตอร์ไซค์ (Motorcycle)</span>
               </button>
             </div>
           </div>
 
-          {/* FIELD 2: Brand & Model Selection */}
+          {/* 2. Brand & Model Selector */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Brand Dropdown */}
             <div>
-              <label htmlFor="form-brand-select" className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-                2. เลือกยี่ห้อ / แบรนด์รถ (Brand)
+              <label htmlFor="form-brand-select" className="block text-xs font-semibold text-slate-300 mb-1.5">
+                2. ยี่ห้อรถ (Brand)
               </label>
               <div className="relative">
                 <select
@@ -326,12 +266,12 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
                     setBrand(e.target.value);
                     setModel('');
                   }}
-                  className="w-full bg-[#121622] border border-[#283248] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors appearance-none cursor-pointer"
+                  className="w-full bg-[#151A26] border border-[#252E42] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-[#E63946] transition-colors appearance-none cursor-pointer"
                 >
-                  <option value="">-- เลือกยี่ห้อรถ (เลือกหรือไม่ก็ได้) --</option>
+                  <option value="">-- ไม่ระบุยี่ห้อ (ดูทั้งหมด) --</option>
                   {availableBrands.map((b) => (
                     <option key={b.id} value={b.name}>
-                      {b.logo} {b.name}
+                      {b.name}
                     </option>
                   ))}
                 </select>
@@ -339,10 +279,9 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
               </div>
             </div>
 
-            {/* Model Dropdown */}
             <div>
-              <label htmlFor="form-model-select" className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-                3. เลือกรุ่นรถ (Model)
+              <label htmlFor="form-model-select" className="block text-xs font-semibold text-slate-300 mb-1.5">
+                3. รุ่นรถ (Model)
               </label>
               <div className="relative">
                 <select
@@ -350,12 +289,12 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
                   disabled={!brand && availableModels.length === 0}
-                  className={`w-full bg-[#121622] border border-[#283248] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors appearance-none ${
+                  className={`w-full bg-[#151A26] border border-[#252E42] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-[#E63946] transition-colors appearance-none ${
                     !brand ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
                   }`}
                 >
                   <option value="">
-                    {brand ? `-- เลือกรุ่นของ ${brand} (เพื่อความแม่นยำตรงรุ่น 100%) --` : '-- กรุณาเลือกยี่ห้อรถก่อน --'}
+                    {brand ? `-- เลือกรุ่นของ ${brand} --` : '-- เลือกรุ่นรถ --'}
                   </option>
                   {availableModels.map((m) => (
                     <option key={m} value={m}>
@@ -368,12 +307,12 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
             </div>
           </div>
 
-          {/* FIELD 3: Primary Goal (What are you looking for?) */}
+          {/* 3. Goal Options */}
           <div>
-            <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-              4. เป้าหมายความต้องการ / สิ่งที่คุณต้องการทำ (Primary Need / Goal)
+            <label className="block text-xs font-semibold text-slate-300 mb-2">
+              4. สิ่งที่คุณต้องการทำ
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
               {GOAL_OPTIONS.map((opt) => {
                 const isSelected = goal === opt.id;
                 return (
@@ -381,42 +320,34 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
                     key={opt.id}
                     type="button"
                     onClick={() => setGoal(opt.id)}
-                    className={`p-3.5 rounded-2xl text-left border transition-all cursor-pointer relative ${
+                    className={`p-3 rounded-xl text-left border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-gradient-to-r from-red-950/60 to-[#19202F] border-red-500 text-white shadow-lg shadow-red-950/40 ring-1 ring-red-500'
-                        : 'bg-[#131724] hover:bg-[#1A2030] border-[#242D3F] text-slate-300'
+                        ? 'bg-[#1C2333] border-[#E63946] text-white'
+                        : 'bg-[#141824] hover:bg-[#181E2E] border-[#202738] text-slate-400'
                     }`}
                   >
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xl">{opt.icon}</span>
-                      <span className="text-xs sm:text-sm font-bold text-white leading-tight">
-                        {opt.label}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-400 line-clamp-2 pl-7">
-                      {opt.desc}
-                    </p>
+                    <div className="text-xs font-bold text-white mb-0.5">{opt.label}</div>
+                    <div className="text-[11px] text-slate-400 line-clamp-1">{opt.desc}</div>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* FIELD 4 & 5: Category & Budget Range */}
+          {/* 4. Category & Budget */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Specific Category */}
             <div>
-              <label htmlFor="form-category-select" className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-                5. หมวดหมู่อะไหล่เฉพาะเจาะจง (Category)
+              <label htmlFor="form-category-select" className="block text-xs font-semibold text-slate-300 mb-1.5">
+                5. หมวดหมู่อะไหล่
               </label>
               <div className="relative">
                 <select
                   id="form-category-select"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full bg-[#121622] border border-[#283248] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors appearance-none cursor-pointer"
+                  className="w-full bg-[#151A26] border border-[#252E42] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-[#E63946] transition-colors appearance-none cursor-pointer"
                 >
-                  <option value="all">-- ทุกหมวดหมู่อะไหล่ --</option>
+                  <option value="all">-- ทุกหมวดหมู่ --</option>
                   {availableCategories.map((c) => (
                     <option key={c.id} value={c.slug}>
                       {c.nameTh} ({c.nameEn})
@@ -427,17 +358,16 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
               </div>
             </div>
 
-            {/* Budget Range */}
             <div>
-              <label htmlFor="form-budget-select" className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-                6. ระดับงบประมาณ (Budget Range)
+              <label htmlFor="form-budget-select" className="block text-xs font-semibold text-slate-300 mb-1.5">
+                6. ระดับงบประมาณ
               </label>
               <div className="relative">
                 <select
                   id="form-budget-select"
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
-                  className="w-full bg-[#121622] border border-[#283248] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors appearance-none cursor-pointer"
+                  className="w-full bg-[#151A26] border border-[#252E42] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-[#E63946] transition-colors appearance-none cursor-pointer"
                 >
                   {BUDGET_OPTIONS.map((b) => (
                     <option key={b.id} value={b.id}>
@@ -450,88 +380,40 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
             </div>
           </div>
 
-          {/* FIELD 6: Driving Style */}
-          <div>
-            <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-              7. สไตล์การขับขี่ (Driving Style)
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-              {DRIVING_STYLE_OPTIONS.map((st) => {
-                const isSelected = drivingStyle === st.id;
-                return (
-                  <button
-                    key={st.id}
-                    type="button"
-                    onClick={() => setDrivingStyle(st.id)}
-                    className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer ${
-                      isSelected
-                        ? 'bg-red-500/20 border-red-500 text-white shadow-md'
-                        : 'bg-[#141824] hover:bg-[#1A2130] border-[#242D3F] text-slate-300'
-                    }`}
-                  >
-                    <span>{st.emoji}</span>
-                    <span className="truncate">{st.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          {/* Action Bar */}
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#1C2333]">
+            <span className="text-xs text-slate-400">
+              พบสินค้าที่เข้าเงื่อนไข: <strong className="text-white font-mono">{recommendedResults.length}</strong> รายการ
+            </span>
 
-          {/* SUBMIT BUTTON BAR */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#20283A]">
-            <div className="text-xs text-slate-400">
-              ⚡ ระบบตรวจพบสินค้าที่ตรงตามเงื่อนไขปัจจุบัน: <strong className="text-amber-400 font-mono text-sm">{recommendedResults.length}</strong> รายการ
-            </div>
-
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              <button
-                type="submit"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-[#E63946] via-[#D62828] to-[#9D0208] hover:brightness-110 text-white text-sm font-black tracking-wide flex items-center justify-center gap-2 shadow-xl shadow-red-950/60 transition-all active:scale-95 cursor-pointer"
-              >
-                <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
-                <span>แสดงผลลัพธ์สินค้าแนะนำทันที ({recommendedResults.length} ชิ้น)</span>
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#E63946] hover:bg-[#D62828] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer"
+            >
+              <span>ดูรายการแนะนำ ({recommendedResults.length})</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
 
         </form>
       </div>
 
-      {/* 2. RESULTS DISPLAY SECTION */}
+      {/* 2. CLEAN RESULTS DISPLAY SECTION */}
       <div id="form-recommendation-results" className="space-y-6 scroll-mt-24">
-        
-        {/* Results Bar */}
-        <div className="p-5 sm:p-6 rounded-3xl bg-[#121622] border border-[#252E42] shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 mb-1">
-              <CheckCircle2 className="w-4 h-4" />
-              <span>ผลการประมวลผลคำแนะนำตามแบบฟอร์มของคุณ</span>
-            </div>
-            <h3 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
-              <span>รายการอะไหล่แนะนำที่ตรงความต้องการ</span>
-              <span className="px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-300 text-xs font-mono font-bold border border-red-500/30">
-                {recommendedResults.length} รายการ
-              </span>
-            </h3>
-            <p className="text-xs text-slate-400 mt-0.5">
-              {model ? `กรองเฉพาะที่เข้ากันได้กับ: ${brand || ''} ${model}` : `พาหนะ: ${vehicleType === 'car' ? 'รถยนต์' : 'มอเตอร์ไซค์'}`} 
-              {goal !== 'all' && ` • เป้าหมาย: ${GOAL_OPTIONS.find(g => g.id === goal)?.label}`}
-              {budget !== 'all' && ` • งบประมาณ: ${BUDGET_OPTIONS.find(b => b.id === budget)?.label}`}
-            </p>
-          </div>
-
+        <div className="flex items-center justify-between">
+          <h3 className="text-base sm:text-lg font-bold text-white">
+            รายการอะไหล่แนะนำ ({recommendedResults.length} รายการ)
+          </h3>
           {model && (
-            <div className="px-3.5 py-2 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-2 shrink-0">
-              <PackageCheck className="w-4 h-4 text-emerald-400" />
-              <span>ผ่านการตรวจเช็กความเข้ากันได้ตรงรุ่น</span>
-            </div>
+            <span className="text-xs text-emerald-400 flex items-center gap-1.5 font-medium">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>ตรงรุ่น {model}</span>
+            </span>
           )}
         </div>
 
-        {/* Product Cards Grid */}
         {recommendedResults.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {recommendedResults.map((product) => (
               <SmartAdvisorCard
                 key={product.id}
@@ -541,24 +423,21 @@ export const InteractiveRecommendationForm = ({ onQuickView }) => {
             ))}
           </div>
         ) : (
-          <div className="p-12 text-center rounded-3xl bg-[#121622] border border-[#252E42] max-w-lg mx-auto space-y-4">
-            <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto text-amber-400">
-              <AlertTriangle className="w-8 h-8" />
-            </div>
-            <h4 className="text-lg font-bold text-white">ไม่พบอะไหล่ที่ตรงตามเงื่อนไขที่เลือกแบบจำเพาะ</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              ลองปรับระดับงบประมาณหรือเลือกหมวดหมู่ให้กว้างขึ้น เพื่อให้ระบบค้นหาอะไหล่ทดแทนที่ใส่ร่วมกันได้
+          <div className="p-8 text-center rounded-2xl bg-[#11151F] border border-[#202738] max-w-md mx-auto space-y-3">
+            <AlertTriangle className="w-7 h-7 text-amber-400 mx-auto" />
+            <h4 className="text-sm font-bold text-white">ไม่พบสินค้าในเงื่อนไขที่เลือก</h4>
+            <p className="text-xs text-slate-400">
+              ลองปรับตัวเลือกงบประมาณหรือหมวดหมู่ให้กว้างขึ้น
             </p>
             <button
               type="button"
               onClick={handleResetForm}
-              className="px-5 py-2.5 rounded-xl bg-red-600 text-white text-xs font-bold shadow-lg cursor-pointer"
+              className="px-4 py-2 rounded-lg bg-[#E63946] text-white text-xs font-bold cursor-pointer"
             >
-              รีเซ็ตแบบฟอร์มเพื่อดูสินค้าทั้งหมด
+              รีเซ็ตเพื่อดูทั้งหมด
             </button>
           </div>
         )}
-
       </div>
     </div>
   );

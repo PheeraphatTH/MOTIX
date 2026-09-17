@@ -98,14 +98,17 @@ export const Products = () => {
 
       // 8. Vehicle Finder Filter if model is selected
       if (selectedVehicle.model) {
-        const matchesSelectedVehicle = p.compatibleVehicles?.some(v =>
-          v.toLowerCase().includes(selectedVehicle.model.toLowerCase())
-        );
+        const selectedModelLower = selectedVehicle.model.toLowerCase();
+        const matchesSelectedVehicle = p.compatibleVehicles?.some(v => {
+          const vLower = v.toLowerCase();
+          return vLower.includes(selectedModelLower) || selectedModelLower.includes(vLower);
+        });
         if (!matchesSelectedVehicle) {
-          // If vehicle filter is active, check brand fallback
-          const matchesBrand = selectedVehicle.brand && p.compatibleBrands?.includes(selectedVehicle.brand.toLowerCase());
-          if (!matchesBrand) return false;
+          return false;
         }
+      } else if (selectedVehicle.brand) {
+        const matchesBrand = p.compatibleBrands?.includes(selectedVehicle.brand.toLowerCase());
+        if (!matchesBrand) return false;
       }
 
       return true;

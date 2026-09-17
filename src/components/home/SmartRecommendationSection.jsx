@@ -89,31 +89,24 @@ export const SmartRecommendationSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
-          <div className="max-w-2xl space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-red-500/20 via-amber-500/20 to-red-500/20 border border-red-500/30 text-[#FF6B6B] text-xs font-black uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
-              <span>SMART PARTS RECOMMENDATION ENGINE</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
-              ระบบแนะนำอะไหล่อัจฉริยะ{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B6B] to-[#FF9E7D]">
-                ตรงอาการ & ตรงรุ่น
-              </span>
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+          <div className="max-w-2xl space-y-1.5">
+            <h2 className="text-xl sm:text-3xl font-bold text-white tracking-tight">
+              ระบบแนะนำอะไหล่อัจฉริยะ
             </h2>
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-              คิดไม่ออก หรือไม่แน่ใจว่าต้องเปลี่ยนชิ้นไหน? เพียงเลือกอาการที่พบ หรือสไตล์การใช้งาน ระบบจะวิเคราะห์และคัดสรรอะไหล่ที่เหมาะสมที่สุดให้ทันที
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              ค้นหาอะไหล่ที่ตรงรุ่นกับรถของคุณ หรือเลือกดูตามอาการและสไตล์การขับขี่ได้อย่างแม่นยำ
             </p>
           </div>
 
           {/* Quick Filter Toggle (All, Car, Motorcycle) */}
-          <div className="flex items-center gap-2 bg-[#131722] p-1.5 rounded-2xl border border-[#252E42] shrink-0 self-start lg:self-auto">
+          <div className="flex items-center gap-1.5 bg-[#121622] p-1 rounded-xl border border-[#202738] shrink-0 self-start lg:self-auto">
             <button
               type="button"
               onClick={() => setVehicleFilter('all')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 vehicleFilter === 'all'
-                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-sm'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -122,9 +115,9 @@ export const SmartRecommendationSection = () => {
             <button
               type="button"
               onClick={() => setVehicleFilter('car')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 vehicleFilter === 'car'
-                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-sm'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -134,9 +127,9 @@ export const SmartRecommendationSection = () => {
             <button
               type="button"
               onClick={() => setVehicleFilter('motorcycle')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 vehicleFilter === 'motorcycle'
-                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-sm'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -184,62 +177,59 @@ export const SmartRecommendationSection = () => {
           </div>
         ) : null}
 
-        {/* Navigation Tabs (Smart Form vs Symptoms vs Driving Style vs Member) */}
-        <div className="flex border-b border-[#202738] mb-6 overflow-x-auto scrollbar-none gap-2">
+        {/* Navigation Tabs */}
+        <div className="flex border-b border-[#1C2333] mb-6 overflow-x-auto scrollbar-none gap-2">
           <button
             type="button"
             onClick={() => setActiveTab('form')}
-            className={`flex items-center gap-2 px-5 py-3 border-b-2 font-black text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
+            className={`flex items-center gap-2 px-4 py-2.5 border-b-2 font-semibold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
               activeTab === 'form'
-                ? 'border-amber-400 text-amber-300 bg-amber-500/10'
+                ? 'border-[#E63946] text-white'
                 : 'border-transparent text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>1. เลือกตามแบบฟอร์มคัดกรองความต้องการ (Smart Form)</span>
-            <span className="px-1.5 py-0.5 rounded-full bg-gradient-to-r from-red-500 to-amber-500 text-white text-[10px] font-black shadow-sm">
-              แนะนำเด่น
-            </span>
+            <Sparkles className="w-4 h-4 text-[#FF5722]" />
+            <span>ค้นหาตามแบบฟอร์ม (Form)</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('symptoms')}
-            className={`flex items-center gap-2 px-5 py-3 border-b-2 font-bold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
+            className={`flex items-center gap-2 px-4 py-2.5 border-b-2 font-semibold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
               activeTab === 'symptoms'
-                ? 'border-[#E63946] text-white bg-red-500/10'
+                ? 'border-[#E63946] text-white'
                 : 'border-transparent text-slate-400 hover:text-slate-200'
             }`}
           >
             <Activity className="w-4 h-4 text-[#E63946]" />
-            <span>2. ค้นหาแนะนำตามอาการ / ปัญหาของรถ</span>
+            <span>แนะนำตามอาการเสีย</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('styles')}
-            className={`flex items-center gap-2 px-5 py-3 border-b-2 font-bold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
+            className={`flex items-center gap-2 px-4 py-2.5 border-b-2 font-semibold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
               activeTab === 'styles'
-                ? 'border-[#E63946] text-white bg-red-500/10'
+                ? 'border-[#E63946] text-white'
                 : 'border-transparent text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Flame className="w-4 h-4 text-orange-400" />
-            <span>3. แนะนำตามสไตล์การขับขี่ (Driving Style)</span>
+            <Flame className="w-4 h-4 text-[#FF5722]" />
+            <span>แนะนำตามสไตล์การขับขี่</span>
           </button>
 
           {user && (
             <button
               type="button"
               onClick={() => setActiveTab('member')}
-              className={`flex items-center gap-2 px-5 py-3 border-b-2 font-bold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-2.5 border-b-2 font-semibold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === 'member'
-                  ? 'border-emerald-400 text-emerald-300 bg-emerald-500/10'
+                  ? 'border-[#E63946] text-white'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
-              <UserCheck className="w-4 h-4 text-emerald-400" />
-              <span>4. แนะนำตรงรุ่นรถของคุณ ({user.vehicleModel || 'รถสมาชิก'})</span>
+              <UserCheck className="w-4 h-4 text-amber-400" />
+              <span>แนะนำตรงรุ่นรถสมาชิก ({user.vehicleModel || 'ของฉัน'})</span>
             </button>
           )}
         </div>

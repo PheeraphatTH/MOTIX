@@ -16,31 +16,31 @@ export const WhyMotix = () => {
   const reasons = [
     {
       icon: ShieldCheck,
-      title: 'คัดสรรอะไหล่คุณภาพแท้ 100%',
-      desc: 'มั่นใจได้ทุกการสั่งซื้อด้วยอะไหล่แท้จากโรงงานผู้ผลิต และ OEM เกรดเทียบเท่ามาตรฐานศูนย์ มีใบรับประกันทุกชิ้น',
+      title: 'สินค้าคุณภาพแท้ 100%',
+      desc: 'คัดสรรจากแบรนด์ชั้นนำระดับสากล ผ่านมาตรฐานความปลอดภัยสูงสุด พร้อมรับประกันสินค้าทุกชิ้น',
       color: 'text-[#E63946]',
       bg: 'bg-red-500/10 border-red-500/20',
     },
     {
       icon: SearchCheck,
-      title: 'ค้นหาง่าย ตรงรุ่น 100% (Vehicle Finder)',
-      desc: 'ระบบระบุรุ่นและปีรถยนต์/มอเตอร์ไซค์อย่างแม่นยำ ป้องกันปัญหาซื้อผิดสเปก ใส่ไม่ได้ เสียเวลาส่งคืน',
+      title: 'ค้นหาง่าย ตรงรุ่น 100%',
+      desc: 'ระบบ Vehicle Finder ระบุรุ่นและปีรถได้อย่างแม่นยำ ป้องกันปัญหาซื้อผิดสเปก ใส่ไม่ได้',
       color: 'text-[#FF5722]',
       bg: 'bg-orange-500/10 border-orange-500/20',
     },
     {
       icon: Truck,
-      title: 'จัดส่งรวดเร็วทันใจ 24-48 ชม.',
-      desc: 'ระบบคลังสินค้ามาตรฐาน แพ็คเร็ว ป้องกันการกระแทก พร้อมบริการจัดส่งด่วนพิเศษทั่วประเทศไทย',
+      title: 'จัดส่งรวดเร็วทั่วประเทศ',
+      desc: 'ระบบคลังสินค้ามาตรฐาน ส่งไว 24-48 ชม. แพ็คแน่นหนา ปลอดภัยถึงมือคุณอย่างแน่นอน',
       color: 'text-amber-400',
       bg: 'bg-amber-500/10 border-amber-500/20',
     },
     {
       icon: Headphones,
-      title: 'บริการและคำแนะนำจากทีมช่างเทคนิค',
-      desc: 'มีทีมผู้เชี่ยวชาญด้านยานยนต์คอยให้คำแนะนำ ตรวจเช็กเบอร์อะไหล่ เทียบสเปก และตอบคำถามตลอด 7 วัน',
-      color: 'text-emerald-400',
-      bg: 'bg-emerald-500/10 border-emerald-500/20',
+      title: 'บริการหลังการขายพร้อมดูแล',
+      desc: 'มีทีมผู้เชี่ยวชาญด้านยานยนต์คอยให้คำแนะนำ ตรวจเช็กเบอร์อะไหล่ และตอบคำถามตลอดการใช้งาน',
+      color: 'text-red-400',
+      bg: 'bg-red-500/10 border-red-500/20',
     },
   ];
 
@@ -64,7 +64,7 @@ export const WhyMotix = () => {
             return (
               <div
                 key={idx}
-                className="rounded-2xl bg-[#121622] border border-[#222A3B] p-6 flex flex-col justify-between hover:border-slate-600 transition-all duration-300 group hover:-translate-y-1 shadow-lg"
+                className="rounded-2xl bg-[#121622] border border-[#222A3B] p-6 flex flex-col justify-between hover:border-red-500/50 transition-all duration-300 group hover:-translate-y-1 shadow-lg"
               >
                 <div>
                   <div className={`w-12 h-12 rounded-xl ${item.bg} border flex items-center justify-center ${item.color} mb-5 group-hover:scale-110 transition-transform duration-300 shadow-md`}>

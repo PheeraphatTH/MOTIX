@@ -60,7 +60,7 @@ export const Categories = () => {
               onClick={() => setActiveTab('all')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === 'all'
-                  ? 'bg-[#E63946] text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-md shadow-red-950/40'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -70,7 +70,7 @@ export const Categories = () => {
               onClick={() => setActiveTab('car')}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === 'car'
-                  ? 'bg-[#E63946] text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-md shadow-red-950/40'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -81,7 +81,7 @@ export const Categories = () => {
               onClick={() => setActiveTab('motorcycle')}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === 'motorcycle'
-                  ? 'bg-[#FF5722] text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#E63946] to-[#C1121F] text-white shadow-md shadow-red-950/40'
                   : 'text-slate-400 hover:text-white'
               }`}
             >

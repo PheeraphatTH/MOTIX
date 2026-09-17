@@ -174,6 +174,13 @@ export const BRAND_LOGOS = {
       <text x="75" y="28" font-family="'Arial Black', sans-serif" font-size="22" font-weight="900" font-style="italic" fill="#FFCC00" text-anchor="middle">ÖHLINS</text>
     </svg>
   `),
+
+  Bando: toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 40" width="150" height="40">
+      <rect width="150" height="40" rx="4" fill="#E60000"/>
+      <text x="75" y="28" font-family="'Arial Black', Impact, sans-serif" font-size="22" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle">BANDO</text>
+    </svg>
+  `),
 };
 
 // ==========================================
@@ -1471,6 +1478,408 @@ export const PRODUCT_ASSETS = {
           <circle cx="110" cy="35" r="14" fill="url(#goldPlate)" stroke="#3f3f46" stroke-width="2"/>
           <text x="77" y="38" font-family="'Arial Black', sans-serif" font-size="8" font-weight="bold" fill="#facc15" text-anchor="middle">X-RING</text>
         </g>
+      </g>
+    </svg>
+  `),
+
+  // 21. DID 428D Chain & Sprocket Set for Wave 110i / Wave 125i
+  'did-wave-kit': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <radialGradient id="sprocketGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#334155"/>
+          <stop offset="60%" stop-color="#1e293b"/>
+          <stop offset="90%" stop-color="#0f172a"/>
+          <stop offset="100%" stop-color="#020617"/>
+        </radialGradient>
+        <linearGradient id="chainSteel" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#e2e8f0"/>
+          <stop offset="50%" stop-color="#94a3b8"/>
+          <stop offset="100%" stop-color="#475569"/>
+        </linearGradient>
+        <filter id="waveShadow" x="-10%" y="-10%" width="130%" height="130%">
+          <feDropShadow dx="4" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.25"/>
+        </filter>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="510" rx="220" ry="24" fill="#000000" opacity="0.16" filter="blur(16px)"/>
+
+      <!-- Large Rear Sprocket (36T) -->
+      <g transform="translate(240, 280)" filter="url(#waveShadow)">
+        <circle cx="0" cy="0" r="150" fill="url(#sprocketGrad)" stroke="#64748b" stroke-width="4"/>
+        <!-- Lightening Holes -->
+        <circle cx="0" cy="-75" r="28" fill="#FFFFFF" stroke="#334155" stroke-width="3"/>
+        <circle cx="65" cy="-37" r="28" fill="#FFFFFF" stroke="#334155" stroke-width="3"/>
+        <circle cx="65" cy="37" r="28" fill="#FFFFFF" stroke="#334155" stroke-width="3"/>
+        <circle cx="0" cy="75" r="28" fill="#FFFFFF" stroke="#334155" stroke-width="3"/>
+        <circle cx="-65" cy="37" r="28" fill="#FFFFFF" stroke="#334155" stroke-width="3"/>
+        <circle cx="-65" cy="-37" r="28" fill="#FFFFFF" stroke="#334155" stroke-width="3"/>
+        <!-- Center Bore & 4 Bolt Holes for Wave Hub -->
+        <circle cx="0" cy="0" r="42" fill="#FFFFFF" stroke="#475569" stroke-width="4"/>
+        <circle cx="-25" cy="-25" r="7" fill="#0f172a"/>
+        <circle cx="25" cy="-25" r="7" fill="#0f172a"/>
+        <circle cx="25" cy="25" r="7" fill="#0f172a"/>
+        <circle cx="-25" cy="25" r="7" fill="#0f172a"/>
+        <text x="0" y="4" font-family="'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#cbd5e1" text-anchor="middle">D.I.D 36T</text>
+      </g>
+
+      <!-- Small Front Engine Sprocket (14T) -->
+      <g transform="translate(420, 340)" filter="url(#waveShadow)">
+        <circle cx="0" cy="0" r="62" fill="url(#sprocketGrad)" stroke="#94a3b8" stroke-width="3"/>
+        <!-- Center Spline Drive -->
+        <circle cx="0" cy="0" r="22" fill="#FFFFFF" stroke="#334155" stroke-width="3"/>
+        <path d="M-10 -22 L-10 22 M10 -22 L10 22 M-22 -10 L22 -10 M-22 10 L22 10" stroke="#475569" stroke-width="3"/>
+        <text x="0" y="38" font-family="'Arial Black', sans-serif" font-size="10" font-weight="900" fill="#e2e8f0" text-anchor="middle">14T WAVE</text>
+      </g>
+
+      <!-- DID 428D Chain Loop Representation in Foreground -->
+      <g transform="translate(180, 420)" filter="url(#waveShadow)">
+        <rect x="0" y="0" width="240" height="42" rx="10" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+        <circle cx="30" cy="21" r="12" fill="url(#chainSteel)" stroke="#0f172a" stroke-width="2"/>
+        <circle cx="75" cy="21" r="12" fill="url(#chainSteel)" stroke="#0f172a" stroke-width="2"/>
+        <circle cx="120" cy="21" r="12" fill="url(#chainSteel)" stroke="#0f172a" stroke-width="2"/>
+        <circle cx="165" cy="21" r="12" fill="url(#chainSteel)" stroke="#0f172a" stroke-width="2"/>
+        <circle cx="210" cy="21" r="12" fill="url(#chainSteel)" stroke="#0f172a" stroke-width="2"/>
+        <text x="120" y="-8" font-family="'Arial Black', sans-serif" font-size="14" font-weight="900" fill="#dc2626" text-anchor="middle">D.I.D 428D - 106L (JAPAN)</text>
+      </g>
+    </svg>
+  `),
+
+  // 22. YSS Top-Plus Twin Shocks for Wave 110i / Wave 125i
+  'yss-wave-shock': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="chromeBody" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#94a3b8"/>
+          <stop offset="30%" stop-color="#f8fafc"/>
+          <stop offset="50%" stop-color="#cbd5e1"/>
+          <stop offset="80%" stop-color="#ffffff"/>
+          <stop offset="100%" stop-color="#64748b"/>
+        </linearGradient>
+        <linearGradient id="redSpring" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#991b1b"/>
+          <stop offset="35%" stop-color="#ef4444"/>
+          <stop offset="55%" stop-color="#f87171"/>
+          <stop offset="80%" stop-color="#dc2626"/>
+          <stop offset="100%" stop-color="#7f1d1d"/>
+        </linearGradient>
+        <filter id="yssWaveShadow" x="-10%" y="-10%" width="130%" height="130%">
+          <feDropShadow dx="6" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.22"/>
+        </filter>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="520" rx="180" ry="20" fill="#000000" opacity="0.18" filter="blur(14px)"/>
+
+      <!-- Left Shock Absorber -->
+      <g transform="translate(210, 80)" filter="url(#yssWaveShadow)">
+        <!-- Upper Eye Mount -->
+        <circle cx="40" cy="40" r="28" fill="url(#chromeBody)" stroke="#334155" stroke-width="3"/>
+        <circle cx="40" cy="40" r="14" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+        <circle cx="40" cy="40" r="8" fill="#f8fafc"/>
+        <!-- Upper Dust Cover with YSS Logo -->
+        <rect x="15" y="70" width="50" height="60" rx="6" fill="#18181b" stroke="#27272a" stroke-width="2"/>
+        <rect x="20" y="85" width="40" height="20" fill="#dc2626" rx="3"/>
+        <text x="40" y="99" font-family="'Arial Black', sans-serif" font-size="11" font-weight="900" fill="#ffffff" text-anchor="middle">YSS</text>
+        <!-- Chrome Damper Shaft -->
+        <rect x="32" y="130" width="16" height="220" fill="url(#chromeBody)"/>
+        <!-- Red Progressive Coil Spring -->
+        <g stroke="url(#redSpring)" stroke-width="16" stroke-linecap="round" fill="none">
+          <path d="M 12 145 C 40 140, 68 155, 68 165 C 68 175, 12 165, 12 185"/>
+          <path d="M 12 185 C 40 180, 68 195, 68 205 C 68 215, 12 205, 12 225"/>
+          <path d="M 12 225 C 40 220, 68 235, 68 245 C 68 255, 12 245, 12 265"/>
+          <path d="M 12 265 C 40 260, 68 275, 68 285 C 68 295, 12 285, 12 305"/>
+          <path d="M 12 305 C 40 300, 68 315, 68 325 C 68 335, 12 325, 12 345"/>
+          <path d="M 12 345 C 40 340, 68 355, 68 365"/>
+        </g>
+        <!-- Spring Preload Step Collar (Chrome) -->
+        <rect x="18" y="375" width="44" height="25" rx="3" fill="url(#chromeBody)" stroke="#475569" stroke-width="2"/>
+        <!-- Lower Fork / Clevis Mount for Wave Swingarm -->
+        <path d="M 22 400 L 22 450 C 22 460, 58 460, 58 450 L 58 400 Z" fill="#18181b" stroke="#334155" stroke-width="2"/>
+        <circle cx="40" cy="435" r="6" fill="#f8fafc"/>
+      </g>
+
+      <!-- Right Shock Absorber (Twin) -->
+      <g transform="translate(310, 80)" filter="url(#yssWaveShadow)">
+        <!-- Upper Eye Mount -->
+        <circle cx="40" cy="40" r="28" fill="url(#chromeBody)" stroke="#334155" stroke-width="3"/>
+        <circle cx="40" cy="40" r="14" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+        <circle cx="40" cy="40" r="8" fill="#f8fafc"/>
+        <!-- Upper Dust Cover with YSS Logo -->
+        <rect x="15" y="70" width="50" height="60" rx="6" fill="#18181b" stroke="#27272a" stroke-width="2"/>
+        <rect x="20" y="85" width="40" height="20" fill="#dc2626" rx="3"/>
+        <text x="40" y="99" font-family="'Arial Black', sans-serif" font-size="11" font-weight="900" fill="#ffffff" text-anchor="middle">YSS</text>
+        <!-- Chrome Damper Shaft -->
+        <rect x="32" y="130" width="16" height="220" fill="url(#chromeBody)"/>
+        <!-- Red Progressive Coil Spring -->
+        <g stroke="url(#redSpring)" stroke-width="16" stroke-linecap="round" fill="none">
+          <path d="M 12 145 C 40 140, 68 155, 68 165 C 68 175, 12 165, 12 185"/>
+          <path d="M 12 185 C 40 180, 68 195, 68 205 C 68 215, 12 205, 12 225"/>
+          <path d="M 12 225 C 40 220, 68 235, 68 245 C 68 255, 12 245, 12 265"/>
+          <path d="M 12 265 C 40 260, 68 275, 68 285 C 68 295, 12 285, 12 305"/>
+          <path d="M 12 305 C 40 300, 68 315, 68 325 C 68 335, 12 325, 12 345"/>
+          <path d="M 12 345 C 40 340, 68 355, 68 365"/>
+        </g>
+        <!-- Spring Preload Step Collar (Chrome) -->
+        <rect x="18" y="375" width="44" height="25" rx="3" fill="url(#chromeBody)" stroke="#475569" stroke-width="2"/>
+        <!-- Lower Fork / Clevis Mount for Wave Swingarm -->
+        <path d="M 22 400 L 22 450 C 22 460, 58 460, 58 450 L 58 400 Z" fill="#18181b" stroke="#334155" stroke-width="2"/>
+        <circle cx="40" cy="435" r="6" fill="#f8fafc"/>
+      </g>
+    </svg>
+  `),
+
+  // 23. TRW DTEC Blue Shim Ceramic Car Brake Pads (4 Pads Box Set)
+  'trw-car-brakepad': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="trwBlueShim" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#3b82f6"/>
+          <stop offset="50%" stop-color="#1d4ed8"/>
+          <stop offset="100%" stop-color="#1e3a8a"/>
+        </linearGradient>
+        <linearGradient id="ceramicCompound" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#78716c"/>
+          <stop offset="50%" stop-color="#57534e"/>
+          <stop offset="100%" stop-color="#292524"/>
+        </linearGradient>
+        <linearGradient id="trwBoxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#dc2626"/>
+          <stop offset="70%" stop-color="#991b1b"/>
+          <stop offset="100%" stop-color="#7f1d1d"/>
+        </linearGradient>
+        <filter id="padCarShadow" x="-10%" y="-10%" width="130%" height="130%">
+          <feDropShadow dx="6" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.22"/>
+        </filter>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="515" rx="220" ry="24" fill="#000000" opacity="0.18" filter="blur(16px)"/>
+
+      <!-- TRW Packaging Box in Background -->
+      <g transform="translate(100, 140)" filter="url(#padCarShadow)">
+        <polygon points="0,70 140,20 280,70 140,120" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/>
+        <polygon points="0,70 140,120 140,260 0,210" fill="url(#trwBoxGrad)" stroke="#7f1d1d" stroke-width="2"/>
+        <polygon points="140,120 280,70 280,210 140,260" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/>
+        <!-- TRW Box Brand Text -->
+        <text x="65" y="170" transform="skewY(20)" font-family="'Arial Black', sans-serif" font-size="28" font-weight="900" fill="#FFFFFF">TRW</text>
+        <text x="65" y="195" transform="skewY(20)" font-family="'Arial', sans-serif" font-size="12" font-weight="bold" fill="#fecaca">DTEC CERAMIC</text>
+      </g>
+
+      <!-- Brake Pad 1 (Standing upright facing viewer - Blue Shim side) -->
+      <g transform="translate(220, 240)" filter="url(#padCarShadow)">
+        <path d="M 20 20 C 50 10, 190 10, 220 20 C 240 50, 240 100, 220 130 C 190 140, 50 140, 20 130 C 0 100, 0 50, 20 20 Z" 
+              fill="url(#trwBlueShim)" stroke="#1e3a8a" stroke-width="3"/>
+        <!-- Acoustic Sensor Clip -->
+        <rect x="10" y="60" width="8" height="30" rx="3" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+        <!-- TRW Stamped Logo & Specs on Blue Shim -->
+        <text x="120" y="65" font-family="'Arial Black', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle">TRW</text>
+        <text x="120" y="85" font-family="'Arial', sans-serif" font-size="11" font-weight="bold" fill="#93c5fd" text-anchor="middle">DTEC COTEC CERAMIC</text>
+        <text x="120" y="105" font-family="'Courier New', monospace" font-size="10" font-weight="bold" fill="#e0e7ff" text-anchor="middle">GDB3392DT / E9-90R</text>
+      </g>
+
+      <!-- Brake Pad 2 (Foreground angled - Friction Material side) -->
+      <g transform="translate(180, 360) rotate(-6)" filter="url(#padCarShadow)">
+        <path d="M 20 20 C 50 10, 210 10, 240 20 C 260 50, 260 110, 240 140 C 210 150, 50 150, 20 140 C 0 110, 0 50, 20 20 Z" 
+              fill="#1e293b" stroke="#0f172a" stroke-width="3"/>
+        <!-- Ceramic Friction Block with Chamfers and Center Slot -->
+        <path d="M 35 30 C 60 22, 200 22, 225 30 L 220 130 C 200 138, 60 138, 40 130 Z" 
+              fill="url(#ceramicCompound)" stroke="#1c1917" stroke-width="2"/>
+        <!-- Vertical Heat Dissipation Slot -->
+        <rect x="127" y="24" width="6" height="110" rx="2" fill="#0f172a"/>
+      </g>
+    </svg>
+  `),
+
+  // 24. Bando Super Kevlar V-Belt for Scooter (PCX, Click, ADV, Scoopy, NMAX, XMAX)
+  'bando-cvt-belt': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="beltRubber" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#3f3f46"/>
+          <stop offset="50%" stop-color="#27272a"/>
+          <stop offset="100%" stop-color="#18181b"/>
+        </linearGradient>
+        <linearGradient id="goldPrint" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#f59e0b"/>
+          <stop offset="50%" stop-color="#fef08a"/>
+          <stop offset="100%" stop-color="#d97706"/>
+        </linearGradient>
+        <filter id="beltShadow" x="-10%" y="-10%" width="130%" height="130%">
+          <feDropShadow dx="6" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.24"/>
+        </filter>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="515" rx="210" ry="22" fill="#000000" opacity="0.16" filter="blur(14px)"/>
+
+      <!-- Looped CVT Drive Belt -->
+      <g filter="url(#beltShadow)">
+        <!-- Outer Belt Oval -->
+        <path d="M 160 200 C 100 200, 90 320, 160 380 L 440 380 C 510 320, 500 200, 440 200 Z" 
+              fill="none" stroke="url(#beltRubber)" stroke-width="48" stroke-linejoin="round"/>
+        
+        <!-- Internal Cogged Teeth Profile (Realistic V-Belt Grooves) -->
+        <path d="M 175 220 C 130 220, 125 300, 175 360 L 425 360 C 475 300, 470 220, 425 220 Z" 
+              fill="none" stroke="#09090b" stroke-width="12" stroke-dasharray="8,6"/>
+        
+        <!-- Kevlar Cord Reinforcement Layer (Gold thread edge) -->
+        <path d="M 160 180 L 440 180" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4,2"/>
+        <path d="M 160 400 L 440 400" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4,2"/>
+
+        <!-- Bando Stamped Branding & Direction Arrows -->
+        <g transform="translate(300, 198)">
+          <rect x="-120" y="-14" width="240" height="28" fill="#18181b" rx="4"/>
+          <!-- Bando Red Badge -->
+          <rect x="-110" y="-9" width="45" height="18" fill="#dc2626" rx="2"/>
+          <text x="-87" y="4" font-family="'Arial Black', sans-serif" font-size="9" font-weight="900" fill="#FFFFFF" text-anchor="middle">BANDO</text>
+          <!-- Spec Text -->
+          <text x="10" y="4" font-family="'Courier New', monospace" font-size="11" font-weight="bold" fill="url(#goldPrint)" text-anchor="middle">SUPER KEVLAR V-BELT 23100-K0S</text>
+          <!-- Direction Arrow -->
+          <path d="M 90 -2 L 100 2 L 90 6 Z" fill="#facc15"/>
+        </g>
+      </g>
+    </svg>
+  `),
+
+  // 25. Motul Scooter Power LE 10W-40 4T (Bottle + Gear Oil Tube)
+  'motul-scooter-oil': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="motulBottle" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#3f3f46"/>
+          <stop offset="50%" stop-color="#27272a"/>
+          <stop offset="100%" stop-color="#18181b"/>
+        </linearGradient>
+        <linearGradient id="redCap" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#b91c1c"/>
+          <stop offset="50%" stop-color="#ef4444"/>
+          <stop offset="100%" stop-color="#7f1d1d"/>
+        </linearGradient>
+        <linearGradient id="gearTube" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#e2e8f0"/>
+          <stop offset="100%" stop-color="#94a3b8"/>
+        </linearGradient>
+        <filter id="motulScooterShadow" x="-10%" y="-10%" width="130%" height="130%">
+          <feDropShadow dx="6" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.22"/>
+        </filter>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="515" rx="200" ry="22" fill="#000000" opacity="0.18" filter="blur(16px)"/>
+
+      <!-- Main Motul 1L Bottle -->
+      <g transform="translate(170, 110)" filter="url(#motulScooterShadow)">
+        <!-- Cap & Spout -->
+        <rect x="75" y="10" width="46" height="35" rx="5" fill="url(#redCap)" stroke="#7f1d1d" stroke-width="2"/>
+        <rect x="79" y="45" width="38" height="15" fill="#52525b"/>
+        <!-- Handle & Body Profile -->
+        <path d="M 40 60 L 160 60 C 180 80, 190 120, 190 170 L 190 380 C 190 395, 175 405, 155 405 L 45 405 C 25 405, 10 395, 10 380 L 10 170 C 10 120, 20 80, 40 60 Z" 
+              fill="url(#motulBottle)" stroke="#09090b" stroke-width="3"/>
+        <!-- Grippy side grooves -->
+        <line x1="20" y1="200" x2="20" y2="350" stroke="#52525b" stroke-width="4" stroke-linecap="round"/>
+        <line x1="180" y1="200" x2="180" y2="350" stroke="#52525b" stroke-width="4" stroke-linecap="round"/>
+
+        <!-- Motul Red Header Logo -->
+        <rect x="30" y="135" width="140" height="42" fill="#dc2626" rx="4"/>
+        <text x="100" y="165" font-family="'Arial Black', sans-serif" font-size="24" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle">MOTUL</text>
+
+        <!-- Product Label -->
+        <rect x="30" y="185" width="140" height="180" fill="#f8fafc" rx="4"/>
+        <rect x="30" y="185" width="140" height="30" fill="#ea580c"/>
+        <text x="100" y="205" font-family="'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle">SCOOTER POWER</text>
+        <text x="100" y="235" font-family="'Arial Black', sans-serif" font-size="20" font-weight="900" fill="#0f172a" text-anchor="middle">10W-40</text>
+        <text x="100" y="255" font-family="'Arial', sans-serif" font-size="10" font-weight="bold" fill="#dc2626" text-anchor="middle">100% SYNTHETIC</text>
+        <!-- JASO MB Badge -->
+        <rect x="45" y="270" width="110" height="24" fill="#0284c7" rx="4"/>
+        <text x="100" y="286" font-family="'Arial Black', sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF" text-anchor="middle">API SN / JASO MB</text>
+        <!-- Volume -->
+        <text x="100" y="340" font-family="'Arial Black', sans-serif" font-size="16" font-weight="900" fill="#1e293b" text-anchor="middle">1L (1.05 US QT)</text>
+      </g>
+
+      <!-- Motul Scooter Gear Oil Tube (120ml) Standing Beside -->
+      <g transform="translate(380, 260) rotate(8)" filter="url(#motulScooterShadow)">
+        <!-- Tube Nozzle Cap -->
+        <polygon points="40,10 32,50 48,50" fill="#dc2626"/>
+        <rect x="30" y="50" width="20" height="20" fill="#dc2626" rx="2"/>
+        <!-- Tube Body -->
+        <path d="M 25 70 L 55 70 L 65 220 L 15 220 Z" fill="url(#gearTube)" stroke="#64748b" stroke-width="2"/>
+        <!-- Tube Crimped End -->
+        <rect x="12" y="218" width="56" height="12" fill="#475569" rx="2"/>
+        <!-- Gear Oil Text -->
+        <rect x="22" y="100" width="36" height="16" fill="#dc2626"/>
+        <text x="40" y="112" font-family="'Arial Black', sans-serif" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">MOTUL</text>
+        <text x="40" y="135" font-family="'Arial Black', sans-serif" font-size="8" font-weight="900" fill="#0f172a" text-anchor="middle">GEAR</text>
+        <text x="40" y="148" font-family="'Arial', sans-serif" font-size="7" font-weight="bold" fill="#ea580c" text-anchor="middle">80W-90</text>
+        <text x="40" y="180" font-family="'Arial', sans-serif" font-size="7" font-weight="bold" fill="#334155" text-anchor="middle">120 ml</text>
+      </g>
+    </svg>
+  `),
+
+  // 26. GS Battery Extra 135L Heavy Duty Pickup Battery (Hilux Revo, D-Max, Fortuner)
+  'gs-pickup-battery': toSvgDataUri(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+      <defs>
+        <linearGradient id="gsTruckBody" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#27272a"/>
+          <stop offset="60%" stop-color="#18181b"/>
+          <stop offset="100%" stop-color="#09090b"/>
+        </linearGradient>
+        <linearGradient id="gsTruckLid" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#991b1b"/>
+          <stop offset="50%" stop-color="#dc2626"/>
+          <stop offset="100%" stop-color="#7f1d1d"/>
+        </linearGradient>
+        <linearGradient id="leadTerminal" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#cbd5e1"/>
+          <stop offset="50%" stop-color="#f8fafc"/>
+          <stop offset="100%" stop-color="#64748b"/>
+        </linearGradient>
+        <filter id="gsPickupShadow" x="-10%" y="-10%" width="130%" height="130%">
+          <feDropShadow dx="6" dy="20" stdDeviation="18" flood-color="#000000" flood-opacity="0.25"/>
+        </filter>
+      </defs>
+      <rect width="600" height="600" fill="#FFFFFF"/>
+      <ellipse cx="300" cy="515" rx="220" ry="24" fill="#000000" opacity="0.18" filter="blur(16px)"/>
+
+      <g transform="translate(100, 150)" filter="url(#gsPickupShadow)">
+        <!-- Top Lid Red -->
+        <rect x="20" y="30" width="360" height="65" rx="8" fill="url(#gsTruckLid)" stroke="#7f1d1d" stroke-width="2"/>
+        <!-- Main Battery Case Black -->
+        <rect x="25" y="90" width="350" height="240" rx="6" fill="url(#gsTruckBody)" stroke="#09090b" stroke-width="3"/>
+        
+        <!-- Heavy Duty Red Carrying Handle -->
+        <path d="M 60 40 C 60 -10, 340 -10, 340 40" fill="none" stroke="#ef4444" stroke-width="14" stroke-linecap="round"/>
+        <path d="M 60 40 C 60 -10, 340 -10, 340 40" fill="none" stroke="#b91c1c" stroke-width="6" stroke-linecap="round"/>
+
+        <!-- Positive Terminal Post (Left, with Red Ring) -->
+        <rect x="70" y="10" width="32" height="24" rx="4" fill="url(#leadTerminal)" stroke="#475569" stroke-width="2"/>
+        <circle cx="86" cy="22" r="7" fill="#dc2626"/>
+        <text x="86" y="26" font-family="'Arial Black', sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle">+</text>
+
+        <!-- Negative Terminal Post (Right, with Black Ring) -->
+        <rect x="298" y="10" width="32" height="24" rx="4" fill="url(#leadTerminal)" stroke="#475569" stroke-width="2"/>
+        <circle cx="314" cy="22" r="7" fill="#0f172a"/>
+        <text x="314" y="25" font-family="'Arial Black', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">-</text>
+
+        <!-- 6 Cell Vent Caps -->
+        <circle cx="120" cy="62" r="10" fill="#18181b" stroke="#475569" stroke-width="2"/>
+        <circle cx="155" cy="62" r="10" fill="#18181b" stroke="#475569" stroke-width="2"/>
+        <circle cx="190" cy="62" r="10" fill="#18181b" stroke="#475569" stroke-width="2"/>
+        <circle cx="225" cy="62" r="10" fill="#18181b" stroke="#475569" stroke-width="2"/>
+        <circle cx="260" cy="62" r="10" fill="#18181b" stroke="#475569" stroke-width="2"/>
+        <circle cx="295" cy="62" r="10" fill="#18181b" stroke="#475569" stroke-width="2"/>
+
+        <!-- Battery Front Brand Decal -->
+        <rect x="45" y="120" width="310" height="180" fill="#0f172a" rx="6" stroke="#334155" stroke-width="2"/>
+        <!-- GS Logo Red -->
+        <text x="65" y="175" font-family="'Arial Black', Impact, sans-serif" font-size="52" font-weight="900" fill="#dc2626">GS</text>
+        <text x="155" y="155" font-family="'Arial', sans-serif" font-size="14" font-weight="900" fill="#cbd5e1">YUASA</text>
+        <text x="155" y="175" font-family="'Arial Black', sans-serif" font-size="14" font-weight="900" fill="#ef4444">BATTERY</text>
+
+        <!-- Model Specs -->
+        <rect x="65" y="195" width="270" height="36" fill="#dc2626" rx="4"/>
+        <text x="200" y="220" font-family="'Arial Black', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle">EXTRA 135L (12V 85Ah)</text>
+
+        <text x="65" y="260" font-family="'Arial Black', sans-serif" font-size="13" font-weight="bold" fill="#facc15">COLD CRANKING: 680 CCA</text>
+        <text x="65" y="280" font-family="'Arial', sans-serif" font-size="11" font-weight="bold" fill="#94a3b8">สำหรับ Hilux Revo / Fortuner / D-Max / MU-X</text>
       </g>
     </svg>
   `),

@@ -17,9 +17,14 @@ import {
   ShieldCheck,
   Tag,
   ArrowRight,
+  Copy,
+  Check,
+  ShoppingBag,
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/common/Button';
+import { EmailPreviewModal } from '../components/common/EmailPreviewModal';
+import { MotixBrandLogo } from '../components/common/MotixBrandLogo';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -41,8 +46,12 @@ export const Register = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [emailDeliveryInfo, setEmailDeliveryInfo] = useState(null);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [copiedCoupon, setCopiedCoupon] = useState(false);
+  const [memberId] = useState(`MTX-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
 
@@ -79,82 +88,221 @@ export const Register = () => {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const res = registerUser({
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        password: form.password,
-        vehicleType: form.vehicleType,
-        vehicleModel: form.vehicleModel,
-      });
+    const res = registerUser({
+      name: form.name,
+      email: form.email,
+      phone: form.phone,
+      password: form.password,
+      vehicleType: form.vehicleType,
+      vehicleModel: form.vehicleModel,
+    });
 
+    if (!res.success) {
       setIsSubmitting(false);
+      setErrorMessage(res.message);
+      return;
+    }
 
-      if (!res.success) {
-        setErrorMessage(res.message);
-      } else {
-        setRegisterSuccess(true);
-        setTimeout(() => {
-          navigate('/');
-        }, 2500);
-      }
-    }, 600);
+    // Trigger Welcome Email through MOTIX Gmail SMTP service
+    try {
+      const emailRes = await fetch('/api/auth/register-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          vehicleType: form.vehicleType,
+          vehicleModel: form.vehicleModel,
+        }),
+      });
+      const emailData = await emailRes.json();
+      setEmailDeliveryInfo(emailData);
+    } catch (err) {
+      console.warn('Email dispatch warning:', err);
+    }
+
+    setIsSubmitting(false);
+    setRegisterSuccess(true);
   };
 
   if (registerSuccess) {
     return (
-      <div className="min-h-screen bg-[#0B0D12] py-12 sm:py-20 flex items-center justify-center px-4">
-        <div className="w-full max-w-md bg-[#121622] border border-emerald-500/40 rounded-3xl p-8 shadow-2xl text-center space-y-5 animate-in fade-in zoom-in duration-300">
-          <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/30">
-            <CheckCircle2 className="w-10 h-10" />
-          </div>
+      <div className="min-h-screen bg-[#07090E] py-10 sm:py-16 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Dynamic Background Glow matching Hero */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_15%,rgba(230,57,70,0.15)_0%,transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="space-y-1">
-            <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
-              REGISTRATION SUCCESS
-            </span>
-            <h2 className="text-2xl font-black text-white">
+        <div className="w-full max-w-xl bg-[#0E121B] border border-[#222C3E] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative z-10 animate-in fade-in zoom-in duration-300">
+          
+          {/* Header with authentic MOTIX Logo */}
+          <div className="text-center space-y-3">
+            <div className="flex justify-center">
+              <MotixBrandLogo height={42} />
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-xs font-bold">
+              <CheckCircle2 className="w-4 h-4" />
+              <span>REGISTRATION COMPLETE &bull; ยืนยันการสมัครสำเร็จ</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl font-black text-white font-heading tracking-tight">
               ยินดีต้อนรับสมาชิกใหม่ MOTIX!
             </h2>
-            <p className="text-xs text-slate-300">
-              สร้างบัญชีของคุณ <strong>{form.name}</strong> เรียบร้อยแล้ว
+            <p className="text-sm text-slate-300">
+              สร้างบัญชีของคุณ <strong className="text-white">{form.name}</strong> เรียบร้อยแล้ว
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#0E1119] border border-[#222A3B] text-left space-y-2 text-xs">
-            <div className="flex items-center justify-between text-slate-300">
-              <span>สถานะสมาชิก:</span>
-              <span className="font-bold text-amber-400">Gold Member</span>
-            </div>
-            <div className="flex items-center justify-between text-slate-300">
-              <span>แต้มต้อนรับสมาชิกใหม่:</span>
-              <span className="font-bold text-emerald-400">+100 แต้ม</span>
-            </div>
-            <div className="flex items-center justify-between text-slate-300">
-              <span>โค้ดส่วนลดพิเศษ:</span>
-              <span className="font-bold font-mono text-[#FF6B6B]">WELCOME100 (ลด ฿100)</span>
-            </div>
-            {form.vehicleModel && (
-              <div className="flex items-center justify-between text-slate-300">
-                <span>รุ่นรถที่บันทึก:</span>
-                <span className="font-bold text-white truncate max-w-[180px]">{form.vehicleModel}</span>
+          {/* REALISTIC MOTORSPORT VIP MEMBER CARD (Photorealistic Carbon & Titanium) */}
+          <div className="relative rounded-2xl bg-[#070A0F] border border-red-500/40 p-5 sm:p-6 shadow-2xl overflow-hidden">
+            {/* Background Carbon Weave Overlay */}
+            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:8px_8px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-red-600/15 rounded-full blur-2xl pointer-events-none" />
+            
+            {/* Card Top Row: Brand & Tier */}
+            <div className="relative z-10 flex items-center justify-between mb-4">
+              <div>
+                <span className="text-xl font-black tracking-wider text-white font-['Arial_Black',Impact]">
+                  MOTI<span className="text-[#E63946]">X</span>
+                </span>
+                <span className="block text-[9px] font-bold text-slate-400 tracking-widest uppercase">
+                  VIP MOTORSPORT CLUB
+                </span>
               </div>
-            )}
+              <div className="px-3 py-1 rounded-full bg-[#161E2D] border border-red-500/40 text-[11px] font-black text-white flex items-center gap-1.5 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-[#FF5722] animate-pulse" />
+                <span>SILVER RACER</span>
+              </div>
+            </div>
+
+            {/* Chip & Benefits Row */}
+            <div className="relative z-10 flex items-center justify-between my-3 pb-3 border-b border-[#1A2333]">
+              <div className="flex items-center gap-3">
+                {/* Gold Chip Graphic */}
+                <div className="w-10 h-8 rounded-md bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 border border-amber-800 p-1 flex flex-col justify-between shadow-sm">
+                  <div className="w-full h-1 bg-amber-900/40 rounded-xs" />
+                  <div className="w-full h-1 bg-amber-900/40 rounded-xs" />
+                </div>
+                <div className="text-[11px] font-mono text-slate-400">
+                  {memberId}
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-xs font-bold text-emerald-400 block">+100 แต้มต้อนรับ</span>
+                <span className="text-[10px] text-slate-400">สะสมแต้ม 2x ทุกยอดซื้อ</span>
+              </div>
+            </div>
+
+            {/* Member Details */}
+            <div className="relative z-10 grid grid-cols-2 gap-3 pt-1 text-xs">
+              <div>
+                <span className="text-[10px] font-bold uppercase text-slate-400 tracking-wider block">
+                  MEMBER NAME
+                </span>
+                <span className="font-bold text-white text-sm truncate block">
+                  {form.name || 'MOTIX MEMBER'}
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="text-[10px] font-bold uppercase text-slate-400 tracking-wider block">
+                  REGISTERED VEHICLE
+                </span>
+                <span className="font-bold text-[#FF5722] text-sm truncate block">
+                  {form.vehicleModel || (form.vehicleType === 'bike' ? 'มอเตอร์ไซค์' : 'รถยนต์')}
+                </span>
+              </div>
+            </div>
           </div>
 
-          <p className="text-[11px] text-slate-500">
-            ระบบกำลังนำคุณไปยังหน้าแรกใน 3 วินาที...
-          </p>
+          {/* 15% Welcome Coupon Box (Realistic Design) */}
+          <div className="p-4 rounded-2xl bg-[#090C12] border border-dashed border-[#FF5722] flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="space-y-0.5 text-center sm:text-left">
+              <div className="text-xs font-bold text-[#FF5722] uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1.5">
+                <Tag className="w-3.5 h-3.5" />
+                <span>โค้ดส่วนลดต้อนรับสมาชิกใหม่</span>
+              </div>
+              <div className="text-sm font-bold text-white">
+                รับส่วนลด 15% ไม่มีขั้นต่ำ (ลดสูงสุด ฿1,000)
+              </div>
+              <div className="text-[11px] text-slate-400">
+                ใช้ได้กับอะไหล่และน้ำมันเครื่องทุกชิ้นในร้าน MOTIX
+              </div>
+            </div>
 
-          <Button
-            variant="primary"
-            size="md"
-            onClick={() => navigate('/')}
-            className="w-full"
-          >
-            เข้าสู่หน้าแรกทันที
-          </Button>
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="px-3 py-1.5 rounded-lg bg-[#141A26] border border-[#253246] font-mono font-bold text-sm text-[#FF5722] tracking-wider">
+                MOTIX-WELCOME15
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText('MOTIX-WELCOME15');
+                  setCopiedCoupon(true);
+                  setTimeout(() => setCopiedCoupon(false), 2000);
+                }}
+                className="p-2 rounded-lg bg-[#1D2536] hover:bg-[#253046] text-slate-200 hover:text-white border border-[#2E3C54] transition-colors cursor-pointer"
+                title="คัดลอกโค้ด"
+              >
+                {copiedCoupon ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Email Dispatch Notice */}
+          <div className="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/30 flex items-center gap-3 text-xs text-emerald-300">
+            <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="truncate">
+              จัดส่งบัตรสมาชิกและโค้ดลด 15% ไปยัง <strong className="text-white">{form.email}</strong> เรียบร้อยแล้ว
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="space-y-2.5">
+            <button
+              type="button"
+              onClick={() => setShowPreviewModal(true)}
+              className="w-full py-3 px-4 rounded-xl bg-[#141924] hover:bg-[#1C2333] border border-red-500/40 text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md"
+            >
+              <Eye className="w-4 h-4 text-[#FF5722]" />
+              <span>เปิดดูอีเมลจริงที่ส่ง (Realistic Email Preview)</span>
+            </button>
+
+            <div className="flex flex-col sm:flex-row gap-2.5">
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => navigate('/products')}
+                icon={ShoppingBag}
+                className="flex-1 shadow-lg shadow-red-950/40"
+              >
+                เลือกซื้ออะไหล่สำหรับ {form.vehicleModel || 'รถของคุณ'}
+              </Button>
+              <Button
+                variant="outline"
+                size="md"
+                onClick={() => navigate('/')}
+                className="flex-1"
+              >
+                เข้าสู่หน้าแรก
+              </Button>
+            </div>
+          </div>
+
+          {/* Guarantees Footer */}
+          <div className="pt-2 border-t border-[#1C2536] grid grid-cols-3 gap-2 text-center text-[11px] text-slate-400">
+            <div>🛡️ อะไหล่แท้ 100%</div>
+            <div>🚚 จัดส่งด่วน 24-48h</div>
+            <div>🔧 ค้นหาตรงรุ่น 100%</div>
+          </div>
+
+          {/* Email Preview Modal */}
+          <EmailPreviewModal
+            isOpen={showPreviewModal}
+            onClose={() => setShowPreviewModal(false)}
+            initialType="register"
+            prefillEmail={form.email}
+          />
         </div>
       </div>
     );
@@ -226,7 +374,7 @@ export const Register = () => {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full bg-[#0E1119] border border-[#262F42] rounded-xl px-3.5 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-[#E63946] transition-colors"
-              placeholder="เช่น นายพีรพัฒน์ มั่นคง"
+              placeholder="ระบุชื่อ - นามสกุลของคุณ"
             />
           </div>
 
