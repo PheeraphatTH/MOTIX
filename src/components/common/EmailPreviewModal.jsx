@@ -17,18 +17,44 @@ import {
   Check,
   Code,
   Layers,
+  Receipt,
+  ShoppingBag,
 } from 'lucide-react';
-import { generateSubscribeEmailHtml, generateRegisterEmailHtml } from '../../../server/emailTemplates';
-import { getApiUrl } from '../../utils/apiConfig';
+import {
+  generateSubscribeEmailHtml,
+  generateRegisterEmailHtml,
+  generateOrderConfirmationEmailHtml,
+} from '../../../server/emailTemplates';
+import { getApiUrl, getStoreBaseUrl } from '../../utils/apiConfig';
 
-export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', prefillEmail = '' }) => {
-  const [activeTab, setActiveTab] = useState(initialType); // 'subscribe' | 'register' | 'php_assignment'
-  const [testEmail, setTestEmail] = useState(prefillEmail || 'pheeraphatx0093kiw@gmail.com');
-  const [testName, setTestName] = useState('');
-  const [vehicleModel, setVehicleModel] = useState('Honda Civic FE / Wave 110i');
+export const EmailPreviewModal = ({
+  isOpen,
+  onClose,
+  initialType = 'order',
+  prefillEmail = '',
+  orderData = null,
+}) => {
+  const [activeTab, setActiveTab] = useState(initialType); // 'order' | 'subscribe' | 'register' | 'php_assignment'
+  const [testEmail, setTestEmail] = useState(prefillEmail || orderData?.shippingAddress?.email || 'pheeraphatx0093kiw@gmail.com');
+  const [testName, setTestName] = useState(orderData?.shippingAddress?.fullName || '');
+  const [vehicleModel, setVehicleModel] = useState(orderData?.shippingAddress?.vehicleNote || 'Honda Civic FE / Wave 110i');
   const [isSending, setIsSending] = useState(false);
   const [sendResult, setSendResult] = useState(null);
   const [previewDevice, setPreviewDevice] = useState('desktop'); // 'desktop' | 'mobile'
+
+  useEffect(() => {
+    if (initialType) {
+      setActiveTab(initialType);
+    }
+    if (orderData?.shippingAddress?.email) {
+      setTestEmail(orderData.shippingAddress.email);
+    } else if (prefillEmail) {
+      setTestEmail(prefillEmail);
+    }
+    if (orderData?.shippingAddress?.fullName) {
+      setTestName(orderData.shippingAddress.fullName);
+    }
+  }, [initialType, prefillEmail, orderData]);
 
   // PHP Assignment State
   const [selectedPhpFile, setSelectedPhpFile] = useState('subscribe_form.php');
@@ -62,12 +88,91 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
   };
 
   // Current store URL for direct backlinks in preview and real email
-  const currentStoreUrl = typeof window !== 'undefined' && window.location.origin
-    ? window.location.origin
-    : 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app';
+  const currentStoreUrl = getStoreBaseUrl();
+
+  const isGitHubPages = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
+
+  const defaultSampleOrder = useMemo(() => ({
+    orderId: 'MTX-849201',
+    date: new Date().toLocaleDateString('th-TH', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }),
+    items: [
+      {
+        id: 'p-01',
+        name: 'ชุดจานเบรกคู่หน้า Brembo GT Slot (330mm)',
+        nameTh: 'จานเบรกเซาะร่องประสิทธิภาพสูง',
+        price: 18500,
+        quantity: 1,
+        brand: 'Brembo',
+        sku: 'BRM-09A8201',
+        vehicleModel: 'Honda Civic FE / Accord',
+      },
+      {
+        id: 'p-02',
+        name: 'ผ้าเบรกคู่หน้า Project Mu B-Spec Sport',
+        nameTh: 'ผ้าเบรกเกรดสปอร์ต ทนความร้อน 500°C',
+        price: 4200,
+        quantity: 1,
+        brand: 'Project Mu',
+        sku: 'PMU-BSPEC-FR',
+        vehicleModel: 'Honda Civic FE',
+      },
+      {
+        id: 'p-03',
+        name: 'น้ำมันเบรก Motul RBF 660 Factory Line (500ml)',
+        nameTh: 'น้ำมันเบรกจุดเดือดสูงเกรดสนามแข่ง',
+        price: 850,
+        quantity: 2,
+        brand: 'Motul',
+        sku: 'MTL-RBF660',
+      },
+    ],
+    subtotal: 24400,
+    discount: 2440,
+    shipping: 0,
+    total: 21960,
+    shippingAddress: {
+      fullName: testName || 'สมชาย มั่นคง',
+      phone: '081-234-5678',
+      email: testEmail || 'somchai.m@example.com',
+      address: '123/45 หมู่บ้านพรีเมียม ถ.ศรีนครินทร์ แขวงหนองบอน',
+      district: 'เขตประเวศ',
+      province: 'กรุงเทพมหานคร',
+      postalCode: '10250',
+      vehicleNote: vehicleModel || 'Honda Civic FE 1.5 Turbo RS',
+    },
+    paymentMethod: 'promptpay',
+    shippingMethod: 'express',
+    pointsEarned: 439,
+    storeUrl: currentStoreUrl,
+  }), [testName, testEmail, vehicleModel, currentStoreUrl]);
 
   // Generate Email HTML directly in memory for 100% reliable preview without network 404
   const renderedEmailHtml = useMemo(() => {
+    if (activeTab === 'order') {
+      const targetOrder = orderData
+        ? {
+            ...orderData,
+            shippingAddress: {
+              ...orderData.shippingAddress,
+              email: testEmail || orderData.shippingAddress?.email || 'customer@example.com',
+            },
+            storeUrl: currentStoreUrl,
+          }
+        : {
+            ...defaultSampleOrder,
+            shippingAddress: {
+              ...defaultSampleOrder.shippingAddress,
+              email: testEmail || 'customer@example.com',
+            },
+          };
+      return generateOrderConfirmationEmailHtml(targetOrder);
+    }
     if (activeTab === 'subscribe') {
       return generateSubscribeEmailHtml(testEmail || 'customer@example.com', currentStoreUrl);
     }
@@ -77,7 +182,7 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
       vehicleModel: vehicleModel || 'Honda Civic FE',
       storeUrl: currentStoreUrl,
     });
-  }, [activeTab, testEmail, testName, vehicleModel, currentStoreUrl]);
+  }, [activeTab, testEmail, testName, vehicleModel, currentStoreUrl, orderData, defaultSampleOrder]);
 
   if (!isOpen) return null;
 
@@ -91,32 +196,65 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
       return;
     }
 
+    if (isGitHubPages) {
+      setSendResult({
+        success: false,
+        isGitHubPages: true,
+        message: '⚠️ บน GitHub Pages เป็น Static Hosting ไม่มีเซิร์ฟเวอร์ Node.js รันอยู่เบื้องหลัง จึงไม่สามารถส่ง Gmail SMTP ได้ตรงๆ กรุณาทดสอบส่งจริงผ่านหน้าต่าง Preview ของ AI Studio (หน้านี้) หรือรันใน VS Code',
+      });
+      return;
+    }
+
     setIsSending(true);
     setSendResult(null);
 
     try {
-      const endpoint = getApiUrl(
-        activeTab === 'subscribe'
-          ? '/api/newsletter/subscribe'
-          : '/api/auth/register-email'
-      );
+      let endpoint = '';
+      let payload = {};
 
-      const payload = activeTab === 'subscribe'
-        ? { email: testEmail, storeUrl: currentStoreUrl }
-        : {
-            name: testName,
-            email: testEmail,
-            phone: '081-234-5678',
-            vehicleType: 'car',
-            vehicleModel: vehicleModel,
-            storeUrl: currentStoreUrl,
-          };
+      if (activeTab === 'order') {
+        endpoint = getApiUrl('/api/order/confirmation-email');
+        const targetOrder = orderData
+          ? {
+              ...orderData,
+              shippingAddress: {
+                ...orderData.shippingAddress,
+                email: testEmail,
+              },
+            }
+          : {
+              ...defaultSampleOrder,
+              shippingAddress: {
+                ...defaultSampleOrder.shippingAddress,
+                email: testEmail,
+              },
+            };
+        payload = { order: targetOrder, storeUrl: currentStoreUrl };
+      } else if (activeTab === 'subscribe') {
+        endpoint = getApiUrl('/api/newsletter/subscribe');
+        payload = { email: testEmail, storeUrl: currentStoreUrl };
+      } else {
+        endpoint = getApiUrl('/api/auth/register-email');
+        payload = {
+          name: testName,
+          email: testEmail,
+          phone: '081-234-5678',
+          vehicleType: 'car',
+          vehicleModel: vehicleModel,
+          storeUrl: currentStoreUrl,
+        };
+      }
 
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.message || `HTTP ${res.status}: ไม่สามารถส่งอีเมลได้`);
+      }
 
       const data = await res.json();
       setSendResult({
@@ -127,7 +265,7 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
     } catch (err) {
       setSendResult({
         success: false,
-        message: 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์อีเมล กรุณาลองใหม่อีกครั้ง',
+        message: `เกิดข้อผิดพลาดในการเชื่อมต่อ: ${err.message || 'Network Error'}`,
       });
     } finally {
       setIsSending(false);
@@ -149,9 +287,15 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
                 <h3 className="text-base font-bold text-white">
                   ระบบจำลองและส่งอีเมลอัตโนมัติ MOTIX
                 </h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                  Gmail SMTP Online
-                </span>
+                {isGitHubPages ? (
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                    GitHub Pages (Static Preview)
+                  </span>
+                ) : (
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                    Gmail SMTP Online (Server Mode)
+                  </span>
+                )}
               </div>
               <p className="text-xs text-slate-400">
                 ส่งผ่าน: <span className="text-slate-200 font-mono">pheeraphatx0093kiw@gmail.com</span>
@@ -201,6 +345,21 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
         <div className="flex border-b border-[#1E273A] bg-[#0A0D14] px-5 gap-2 shrink-0 overflow-x-auto">
           <button
             type="button"
+            onClick={() => { setActiveTab('order'); setSendResult(null); }}
+            className={`py-3 px-4 font-bold text-xs sm:text-sm border-b-2 flex items-center gap-2 transition-all shrink-0 ${
+              activeTab === 'order'
+                ? 'border-emerald-500 text-white bg-[#141A28]'
+                : 'border-transparent text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Receipt className="w-4 h-4 text-emerald-400" />
+            <span>1. สรุปคำสั่งซื้อ & ใบเสร็จ (Order Receipt Email)</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">
+              ส่งเมื่อซื้อสินค้า
+            </span>
+          </button>
+          <button
+            type="button"
             onClick={() => { setActiveTab('subscribe'); setSendResult(null); }}
             className={`py-3 px-4 font-bold text-xs sm:text-sm border-b-2 flex items-center gap-2 transition-all shrink-0 ${
               activeTab === 'subscribe'
@@ -209,7 +368,7 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
             }`}
           >
             <Sparkles className="w-4 h-4 text-[#FF5722]" />
-            <span>1. อีเมลหลัง Subscribe รับข่าวสาร (คูปองลด 10%)</span>
+            <span>2. อีเมล Subscribe ข่าวสาร (คูปอง 10%)</span>
           </button>
           <button
             type="button"
@@ -221,21 +380,21 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
             }`}
           >
             <Award className="w-4 h-4 text-[#E63946]" />
-            <span>2. อีเมลหลัง Register สมัครสมาชิก (บัตรสมาชิก + ลด 15%)</span>
+            <span>3. อีเมล Register ต้อนรับสมาชิก (ลด 15%)</span>
           </button>
           <button
             type="button"
             onClick={() => { setActiveTab('php_assignment'); setSendResult(null); }}
             className={`py-3 px-4 font-bold text-xs sm:text-sm border-b-2 flex items-center gap-2 transition-all shrink-0 ${
               activeTab === 'php_assignment'
-                ? 'border-emerald-500 text-white bg-[#141A28]'
+                ? 'border-cyan-500 text-white bg-[#141A28]'
                 : 'border-transparent text-slate-400 hover:text-slate-200'
             }`}
           >
-            <FileCode className="w-4 h-4 text-emerald-400" />
-            <span>3. ใบงาน PHP (subscribe_form.php & sendMail.php)</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono font-bold">
-              ตรงโจทย์อาจารย์
+            <FileCode className="w-4 h-4 text-cyan-400" />
+            <span>4. ใบงาน PHP (subscribe_form.php & sendMail.php)</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-mono font-bold">
+              PHP Native
             </span>
           </button>
         </div>
@@ -419,6 +578,13 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
                   />
                 )}
 
+                {activeTab === 'order' && (
+                  <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-300 font-mono font-bold">
+                    <Receipt className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>คำสั่งซื้อ: #{orderData?.orderId || 'MTX-849201'}</span>
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={isSending}
@@ -432,7 +598,7 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
                   ) : (
                     <>
                       <Send className="w-3.5 h-3.5" />
-                      <span>ทดลองส่งอีเมลจริงเข้ากล่องข้อความ</span>
+                      <span>{activeTab === 'order' ? 'ส่งใบเสร็จสรุปคำสั่งซื้อเข้าอีเมลนี้' : 'ทดลองส่งอีเมลจริงเข้ากล่องข้อความ'}</span>
                     </>
                   )}
                 </button>
@@ -440,9 +606,21 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
 
               <div className="text-[11px] text-slate-400 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>แสดงตัวอย่าง HTML จริงที่ถูกส่งเข้า Inbox</span>
+                <span>แสดงตัวอย่าง HTML จริงที่ลูกค้าจะได้รับใน Inbox</span>
               </div>
             </div>
+
+            {/* Static Hosting Advisory for GitHub Pages */}
+            {isGitHubPages && (
+              <div className="bg-amber-500/10 border-b border-amber-500/25 px-5 py-2.5 text-xs text-amber-300 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-base">ℹ️</span>
+                  <span>
+                    <strong>โหมด GitHub Pages:</strong> แสดงตัวอย่างอีเมล HTML สวยงามครบ 100% (หากต้องการทดลองส่งเข้ากล่องข้อความจริง สามารถกดส่งได้ในหน้า Preview ของ AI Studio หรือตอนรันบน VS Code ในเครื่องของคุณ)
+                  </span>
+                </div>
+              </div>
+            )}
 
             {/* Status Toast Banner */}
             {sendResult && (

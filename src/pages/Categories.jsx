@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
   Car,
@@ -33,7 +33,30 @@ const iconMap = {
 };
 
 export const Categories = () => {
-  const [filterType, setFilterType] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const typeParam = searchParams.get('type');
+  const [filterType, setFilterType] = useState(
+    typeParam === 'car' || typeParam === 'motorcycle' ? typeParam : 'all'
+  );
+
+  useEffect(() => {
+    const t = searchParams.get('type');
+    if (t === 'car' || t === 'motorcycle') {
+      setFilterType(t);
+    } else if (!t) {
+      setFilterType('all');
+    }
+  }, [searchParams]);
+
+  const handleFilterChange = (type) => {
+    setFilterType(type);
+    if (type === 'all') {
+      searchParams.delete('type');
+      setSearchParams(searchParams);
+    } else {
+      setSearchParams({ type });
+    }
+  };
 
   const carCategories = categories.filter((c) => c.vehicleType === 'car');
   const motoCategories = categories.filter((c) => c.vehicleType === 'motorcycle');
@@ -57,7 +80,7 @@ export const Categories = () => {
           {/* Filter Pills */}
           <div className="inline-flex items-center p-1 bg-[#131722] rounded-2xl border border-[#242C3D] mt-6">
             <button
-              onClick={() => setFilterType('all')}
+              onClick={() => handleFilterChange('all')}
               className={`px-5 py-2 rounded-xl text-xs font-bold transition-all ${
                 filterType === 'all'
                   ? 'bg-[#E63946] text-white shadow-md'
@@ -67,7 +90,7 @@ export const Categories = () => {
               หมวดหมู่ทั้งหมด ({categories.length})
             </button>
             <button
-              onClick={() => setFilterType('car')}
+              onClick={() => handleFilterChange('car')}
               className={`flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold transition-all ${
                 filterType === 'car'
                   ? 'bg-[#E63946] text-white shadow-md'
@@ -78,7 +101,7 @@ export const Categories = () => {
               <span>อะไหล่รถยนต์ ({carCategories.length})</span>
             </button>
             <button
-              onClick={() => setFilterType('motorcycle')}
+              onClick={() => handleFilterChange('motorcycle')}
               className={`flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold transition-all ${
                 filterType === 'motorcycle'
                   ? 'bg-[#FF5722] text-white shadow-md'

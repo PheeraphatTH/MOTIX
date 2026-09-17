@@ -3,7 +3,12 @@ import path from 'path';
 import fs from 'fs';
 import nodemailer from 'nodemailer';
 import { createServer as createViteServer } from 'vite';
-import { generateSubscribeEmailHtml, generateRegisterEmailHtml } from './server/emailTemplates';
+import {
+  generateSubscribeEmailHtml,
+  generateRegisterEmailHtml,
+  generateOrderConfirmationEmailHtml,
+  OrderEmailData,
+} from './server/emailTemplates';
 
 const app = express();
 const PORT = 3000;
@@ -166,6 +171,65 @@ app.post('/api/auth/register-email', async (req: Request, res: Response) => {
   }
 });
 
+// 3.5. Order Confirmation & Receipt Email Dispatch Endpoint
+app.post('/api/order/confirmation-email', async (req: Request, res: Response) => {
+  try {
+    const { order, storeUrl: clientStoreUrl } = req.body;
+    if (!order || !order.orderId) {
+      return res.status(400).json({ success: false, message: 'ข้อมูลคำสั่งซื้อไม่ถูกต้อง' });
+    }
+
+    const email = order.shippingAddress?.email?.trim();
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ success: false, message: 'ไม่พบที่อยู่อีเมลของลูกค้าสำหรับการจัดส่งใบเสร็จ' });
+    }
+
+    const originStoreUrl = clientStoreUrl || (typeof req.headers.origin === 'string' ? req.headers.origin : undefined);
+    const orderData: OrderEmailData = {
+      ...order,
+      storeUrl: originStoreUrl,
+    };
+
+    const htmlContent = generateOrderConfirmationEmailHtml(orderData);
+
+    let messageId: string | null = null;
+    let sendError: string | null = null;
+
+    try {
+      const info = await transporter.sendMail({
+        from: `"MOTIX Auto Parts Store" <${SMTP_USER}>`,
+        to: email,
+        subject: `[ใบเสร็จคำสั่งซื้อ #${order.orderId}] สรุปข้อมูลการสั่งซื้ออะไหล่ MOTIX Auto Parts`,
+        html: htmlContent,
+      });
+      messageId = info.messageId;
+      console.log(`[MOTIX Order Email] Confirmation email dispatched to ${email} for Order #${order.orderId} (MsgID: ${info.messageId})`);
+    } catch (err: any) {
+      sendError = err.message || 'SMTP Connection Error';
+      console.error('[MOTIX Order Email] Send error:', err);
+    }
+
+    return res.json({
+      success: true,
+      delivered: !sendError,
+      message: sendError
+        ? `บันทึกคำสั่งซื้อ #${order.orderId} เรียบร้อย`
+        : `ส่งใบเสร็จสรุปข้อมูลการสั่งซื้อ #${order.orderId} ไปยัง ${email} สำเร็จแล้ว!`,
+      messageId,
+      email,
+      orderId: order.orderId,
+      htmlContent,
+    });
+  } catch (error: any) {
+    console.error('[MOTIX Server Error] Order Confirmation Email:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'เกิดข้อผิดพลาดในการประมวลผลใบเสร็จคำสั่งซื้อ',
+      error: error.message,
+    });
+  }
+});
+
 // 4. HTML Preview Endpoint (for viewing the generated email in browser / iframe)
 app.get('/api/email/preview', (req: Request, res: Response) => {
   const type = req.query.type as string;
@@ -173,10 +237,69 @@ app.get('/api/email/preview', (req: Request, res: Response) => {
   const name = typeof req.query.name === 'string' ? (req.query.name as string).trim() : '';
   const vehicleType = (req.query.vehicleType as string) || 'car';
   const vehicleModel = (req.query.vehicleModel as string) || 'Honda Civic FE';
+  const storeUrl = (req.query.storeUrl as string) || (typeof req.headers.origin === 'string' ? req.headers.origin : undefined);
 
   if (type === 'subscribe') {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.send(generateSubscribeEmailHtml(email));
+    return res.send(generateSubscribeEmailHtml(email, storeUrl));
+  }
+
+  if (type === 'order') {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    return res.send(generateOrderConfirmationEmailHtml({
+      orderId: (req.query.orderId as string) || 'MTX-849201',
+      date: new Date().toLocaleDateString('th-TH', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      items: [
+        {
+          name: 'ชุดจานเบรกคู่หน้า Brembo GT Slot (330mm)',
+          nameTh: 'จานเบรกเซาะร่องประสิทธิภาพสูง',
+          price: 18500,
+          quantity: 1,
+          brand: 'Brembo',
+          sku: 'BRM-09A8201',
+        },
+        {
+          name: 'ผ้าเบรกคู่หน้า Project Mu B-Spec High-Performance',
+          nameTh: 'ผ้าเบรกเกรดสปอร์ต ทนความร้อน 500°C',
+          price: 4200,
+          quantity: 1,
+          brand: 'Project Mu',
+          sku: 'PMU-BSPEC-FR',
+        },
+        {
+          name: 'น้ำมันเบรก Motul RBF 660 Factory Line (500ml)',
+          nameTh: 'น้ำมันเบรกจุดเดือดสูงเกรดสนามแข่ง',
+          price: 850,
+          quantity: 2,
+          brand: 'Motul',
+          sku: 'MTL-RBF660',
+        },
+      ],
+      subtotal: 24400,
+      discount: 2440,
+      shipping: 0,
+      total: 21960,
+      shippingAddress: {
+        fullName: name || 'สมชาย มั่นคง',
+        phone: '081-234-5678',
+        email,
+        address: '123/45 หมู่บ้านพรีเมียม ถ.ศรีนครินทร์ แขวงหนองบอน',
+        district: 'เขตประเวศ',
+        province: 'กรุงเทพมหานคร',
+        postalCode: '10250',
+        vehicleNote: vehicleModel || 'Honda Civic FE 1.5 Turbo RS',
+      },
+      paymentMethod: 'promptpay',
+      shippingMethod: 'express',
+      pointsEarned: 439,
+      storeUrl,
+    }));
   }
 
   // Default to register preview
@@ -187,6 +310,7 @@ app.get('/api/email/preview', (req: Request, res: Response) => {
     phone: '081-234-5678',
     vehicleType,
     vehicleModel,
+    storeUrl,
   }));
 });
 

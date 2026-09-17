@@ -11,7 +11,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { EmailPreviewModal } from './EmailPreviewModal';
-import { getApiUrl } from '../../utils/apiConfig';
+import { getApiUrl, getStoreBaseUrl } from '../../utils/apiConfig';
 
 export const NewsletterSubscribe = ({ variant = 'default' }) => {
   const [email, setEmail] = useState('');
@@ -34,9 +34,7 @@ export const NewsletterSubscribe = ({ variant = 'default' }) => {
     setStatus(null);
 
     try {
-      const clientStoreUrl = typeof window !== 'undefined' && window.location.origin
-        ? window.location.origin
-        : undefined;
+      const clientStoreUrl = getStoreBaseUrl();
 
       const res = await fetch(getApiUrl('/api/newsletter/subscribe'), {
         method: 'POST',
