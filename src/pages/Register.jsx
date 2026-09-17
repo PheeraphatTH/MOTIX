@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/common/Button';
+import { getApiUrl } from '../utils/apiConfig';
 import { EmailPreviewModal } from '../components/common/EmailPreviewModal';
 import { MotixBrandLogo } from '../components/common/MotixBrandLogo';
 
@@ -105,7 +106,11 @@ export const Register = () => {
 
     // Trigger Welcome Email through MOTIX Gmail SMTP service
     try {
-      const emailRes = await fetch('/api/auth/register-email', {
+      const clientStoreUrl = typeof window !== 'undefined' && window.location.origin
+        ? window.location.origin
+        : undefined;
+
+      const emailRes = await fetch(getApiUrl('/api/auth/register-email'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -114,6 +119,7 @@ export const Register = () => {
           phone: form.phone,
           vehicleType: form.vehicleType,
           vehicleModel: form.vehicleModel,
+          storeUrl: clientStoreUrl,
         }),
       });
       const emailData = await emailRes.json();

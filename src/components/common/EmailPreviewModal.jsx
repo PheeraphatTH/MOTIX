@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   X,
   Mail,
@@ -18,6 +18,8 @@ import {
   Code,
   Layers,
 } from 'lucide-react';
+import { generateSubscribeEmailHtml, generateRegisterEmailHtml } from '../../../server/emailTemplates';
+import { getApiUrl } from '../../utils/apiConfig';
 
 export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', prefillEmail = '' }) => {
   const [activeTab, setActiveTab] = useState(initialType); // 'subscribe' | 'register' | 'php_assignment'
@@ -38,7 +40,7 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
   useEffect(() => {
     if (activeTab === 'php_assignment' && phpViewMode === 'code') {
       setLoadingCode(true);
-      fetch(`/api/php-files/${selectedPhpFile}`)
+      fetch(getApiUrl(`/api/php-files/${selectedPhpFile}`))
         .then((r) => r.text())
         .then((text) => {
           setPhpCode(text);
@@ -59,9 +61,25 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
     });
   };
 
-  if (!isOpen) return null;
+  // Current store URL for direct backlinks in preview and real email
+  const currentStoreUrl = typeof window !== 'undefined' && window.location.origin
+    ? window.location.origin
+    : 'https://ais-pre-qw6ggnlhmejdfkkwsn2uhw-107258666727.asia-southeast1.run.app';
 
-  const previewUrl = `/api/email/preview?type=${activeTab}&email=${encodeURIComponent(testEmail)}&name=${encodeURIComponent(testName)}&vehicleModel=${encodeURIComponent(vehicleModel)}&t=${Date.now()}`;
+  // Generate Email HTML directly in memory for 100% reliable preview without network 404
+  const renderedEmailHtml = useMemo(() => {
+    if (activeTab === 'subscribe') {
+      return generateSubscribeEmailHtml(testEmail || 'customer@example.com', currentStoreUrl);
+    }
+    return generateRegisterEmailHtml({
+      name: testName,
+      email: testEmail || 'customer@example.com',
+      vehicleModel: vehicleModel || 'Honda Civic FE',
+      storeUrl: currentStoreUrl,
+    });
+  }, [activeTab, testEmail, testName, vehicleModel, currentStoreUrl]);
+
+  if (!isOpen) return null;
 
   const handleSendTest = async (e) => {
     e?.preventDefault();
@@ -77,18 +95,21 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
     setSendResult(null);
 
     try {
-      const endpoint = activeTab === 'subscribe'
-        ? '/api/newsletter/subscribe'
-        : '/api/auth/register-email';
+      const endpoint = getApiUrl(
+        activeTab === 'subscribe'
+          ? '/api/newsletter/subscribe'
+          : '/api/auth/register-email'
+      );
 
       const payload = activeTab === 'subscribe'
-        ? { email: testEmail }
+        ? { email: testEmail, storeUrl: currentStoreUrl }
         : {
             name: testName,
             email: testEmail,
             phone: '081-234-5678',
             vehicleType: 'car',
             vehicleModel: vehicleModel,
+            storeUrl: currentStoreUrl,
           };
 
       const res = await fetch(endpoint, {
@@ -106,7 +127,7 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
     } catch (err) {
       setSendResult({
         success: false,
-        message: 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์อีเมล',
+        message: 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์อีเมล กรุณาลองใหม่อีกครั้ง',
       });
     } finally {
       setIsSending(false);
@@ -288,7 +309,7 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
 
                 {/* Download File Button */}
                 <a
-                  href={`/api/php-files/${selectedPhpFile}?download=1`}
+                  href={getApiUrl(`/api/php-files/${selectedPhpFile}?download=1`)}
                   download={selectedPhpFile}
                   className="px-3 py-1.5 rounded-xl bg-[#1A2333] hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold flex items-center gap-1.5 transition-colors"
                 >
@@ -298,7 +319,7 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
 
                 {/* Open in New Tab Button */}
                 <a
-                  href="/subscribe_form.php"
+                  href={getApiUrl('/subscribe_form.php')}
                   target="_blank"
                   rel="noreferrer"
                   className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 transition-colors"
@@ -327,12 +348,12 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
               {phpViewMode === 'interactive' ? (
                 <div className="w-full max-w-2xl h-full min-h-[580px] bg-[#0E121A] rounded-2xl border border-slate-700/80 overflow-hidden shadow-2xl flex flex-col">
                   <div className="bg-[#121722] px-4 py-2 border-b border-[#1E273A] flex items-center justify-between text-xs text-slate-400">
-                    <span className="font-mono text-emerald-400">URL: http://localhost:3000/subscribe_form.php</span>
+                    <span className="font-mono text-emerald-400">URL: {getApiUrl('/subscribe_form.php') || 'http://localhost:3000/subscribe_form.php'}</span>
                     <span>กรอกอีเมลแล้วกดส่งเพื่อทดสอบการทำงานจริงของ POST → sendMail.php</span>
                   </div>
                   <iframe
                     title="PHP Form Interactive"
-                    src="/subscribe_form.php"
+                    src={getApiUrl('/subscribe_form.php')}
                     className="w-full flex-1 border-none min-h-[550px]"
                   />
                 </div>
@@ -466,7 +487,7 @@ export const EmailPreviewModal = ({ isOpen, onClose, initialType = 'subscribe', 
               >
                 <iframe
                   title="MOTIX Email Preview"
-                  src={previewUrl}
+                  srcDoc={renderedEmailHtml}
                   className="w-full h-full min-h-[600px] rounded-xl border border-[#222B3D] bg-[#090B10]"
                 />
               </div>

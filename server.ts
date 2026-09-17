@@ -11,6 +11,17 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Enable CORS for frontend clients (including GitHub Pages)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 // Gmail SMTP Transporter using Google App Password provided by user
 const SMTP_USER = process.env.SMTP_USER || 'pheeraphatx0093kiw@gmail.com';
 const rawPass = process.env.SMTP_PASS || 'tfel prpa veyz bbdk';
@@ -45,7 +56,7 @@ app.get('/api/health', (req: Request, res: Response) => {
 // 2. Newsletter Subscribe Email Endpoint
 app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
   try {
-    const { email } = req.body;
+    const { email, storeUrl } = req.body;
     if (!email || !email.includes('@')) {
       return res.status(400).json({
         success: false,
@@ -53,7 +64,8 @@ app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
       });
     }
 
-    const htmlContent = generateSubscribeEmailHtml(email.trim());
+    const detectedStoreUrl = storeUrl || (typeof req.headers.origin === 'string' ? req.headers.origin : undefined);
+    const htmlContent = generateSubscribeEmailHtml(email.trim(), detectedStoreUrl);
 
     // Send real email via Gmail SMTP
     let sendError: string | null = null;
@@ -82,6 +94,7 @@ app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
       messageId,
       email: email.trim(),
       couponCode: 'MOTIX-NEWS10',
+      storeUrl: detectedStoreUrl,
     });
   } catch (error: any) {
     console.error('[MOTIX Server Error] Subscribe:', error);
@@ -96,7 +109,7 @@ app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
 // 3. Register Welcome Email Endpoint
 app.post('/api/auth/register-email', async (req: Request, res: Response) => {
   try {
-    const { name, email, phone, vehicleType, vehicleModel } = req.body;
+    const { name, email, phone, vehicleType, vehicleModel, storeUrl } = req.body;
     if (!email || !email.includes('@')) {
       return res.status(400).json({
         success: false,
@@ -104,12 +117,14 @@ app.post('/api/auth/register-email', async (req: Request, res: Response) => {
       });
     }
 
+    const detectedStoreUrl = storeUrl || (typeof req.headers.origin === 'string' ? req.headers.origin : undefined);
     const htmlContent = generateRegisterEmailHtml({
       name: name || 'สมาชิก MOTIX',
       email: email.trim(),
       phone,
       vehicleType,
       vehicleModel,
+      storeUrl: detectedStoreUrl,
     });
 
     // Send real email via Gmail SMTP
